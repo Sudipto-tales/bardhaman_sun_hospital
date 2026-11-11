@@ -1,0 +1,104 @@
+{
+  "table": "users",
+  "key": "public_id",
+  "refs": {
+    "role_id": [
+      "roles",
+      "public_id"
+    ]
+  },
+  "json": [],
+  "rows": [
+    {
+      "public_id": "usr-001",
+      "name": "Admin Desk",
+      "email": "admin@thesunhospital.in",
+      "password": null,
+      "avatar": null,
+      "role_id": "role-super",
+      "phone": "+91 90460 05557",
+      "two_factor": 1,
+      "status": "active",
+      "last_active_at": "2026-08-05 08:40:00",
+      "sort_order": 1
+    },
+    {
+      "public_id": "usr-002",
+      "name": "Riya Sarkar",
+      "email": "riya.sarkar@thesunhospital.in",
+      "password": null,
+      "avatar": null,
+      "role_id": "role-editor",
+      "phone": null,
+      "two_factor": 1,
+      "status": "active",
+      "last_active_at": "2026-08-05 07:10:00",
+      "sort_order": 2
+    },
+    {
+      "public_id": "usr-003",
+      "name": "Dr. Jonathon Ronan",
+      "email": "j.ronan@thesunhospital.in",
+      "password": null,
+      "avatar": null,
+      "role_id": "role-doctor",
+      "phone": null,
+      "two_factor": 0,
+      "status": "active",
+      "last_active_at": "2026-08-04 18:20:00",
+      "sort_order": 3
+    },
+    {
+      "public_id": "usr-004",
+      "name": "Billing Team",
+      "email": "billing@thesunhospital.in",
+      "password": null,
+      "avatar": null,
+      "role_id": "role-accounts",
+      "phone": null,
+      "two_factor": 1,
+      "status": "active",
+      "last_active_at": "2026-08-04 16:00:00",
+      "sort_order": 4
+    },
+    {
+      "public_id": "usr-005",
+      "name": "Sanjay Bhattacharya",
+      "email": "s.bhattacharya@thesunhospital.in",
+      "password": null,
+      "avatar": null,
+      "role_id": "role-editor",
+      "phone": null,
+      "two_factor": 0,
+      "status": "active",
+      "last_active_at": "2026-07-30 09:00:00",
+      "sort_order": 5
+    },
+    {
+      "public_id": "usr-006",
+      "name": "Old Intern",
+      "email": "intern2025@thesunhospital.in",
+      "password": null,
+      "avatar": null,
+      "role_id": "role-editor",
+      "phone": null,
+      "two_factor": 0,
+      "status": "suspended",
+      "last_active_at": "2026-06-01 09:00:00",
+      "sort_order": 6
+    },
+    {
+      "public_id": "usr-007",
+      "name": "HR Desk",
+      "email": "hr@thesunhospital.in",
+      "password": null,
+      "avatar": null,
+      "role_id": "role-hr",
+      "phone": null,
+      "two_factor": 0,
+      "status": "invited",
+      "last_active_at": null,
+      "sort_order": 7
+    }
+  ]
+}

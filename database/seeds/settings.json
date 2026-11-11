@@ -1,0 +1,438 @@
+{
+    "table": "settings",
+    "key": null,
+    "refs": [],
+    "json": [],
+    "rows": [
+        {
+            "group_name": "general",
+            "setting_key": "name",
+            "value": "\"The Sun Hospital\""
+        },
+        {
+            "group_name": "general",
+            "setting_key": "shortName",
+            "value": "\"The Sun\""
+        },
+        {
+            "group_name": "general",
+            "setting_key": "tagline",
+            "value": "\"Compassionate Care, Every Day\""
+        },
+        {
+            "group_name": "general",
+            "setting_key": "logo",
+            "value": "\"/assets/logo-tsh.png\""
+        },
+        {
+            "group_name": "general",
+            "setting_key": "logoDark",
+            "value": "\"/assets/logo-nobg.png\""
+        },
+        {
+            "group_name": "general",
+            "setting_key": "favicon",
+            "value": "\"/assets/logo-tsh.png\""
+        },
+        {
+            "group_name": "general",
+            "setting_key": "establishedYear",
+            "value": "2019"
+        },
+        {
+            "group_name": "general",
+            "setting_key": "registrationNo",
+            "value": "\"WB/HOSP/1994/0412\""
+        },
+        {
+            "group_name": "general",
+            "setting_key": "openingHours",
+            "value": "[{\"day\":\"Monday\",\"from\":\"00:00\",\"to\":\"23:59\",\"closed\":false},{\"day\":\"Tuesday\",\"from\":\"00:00\",\"to\":\"23:59\",\"closed\":false},{\"day\":\"Wednesday\",\"from\":\"00:00\",\"to\":\"23:59\",\"closed\":false},{\"day\":\"Thursday\",\"from\":\"00:00\",\"to\":\"23:59\",\"closed\":false},{\"day\":\"Friday\",\"from\":\"00:00\",\"to\":\"23:59\",\"closed\":false},{\"day\":\"Saturday\",\"from\":\"00:00\",\"to\":\"23:59\",\"closed\":false},{\"day\":\"Sunday\",\"from\":\"00:00\",\"to\":\"23:59\",\"closed\":false}]"
+        },
+        {
+            "group_name": "general",
+            "setting_key": "emergencyAlwaysOpen",
+            "value": "true"
+        },
+        {
+            "group_name": "general",
+            "setting_key": "maintenanceMode",
+            "value": "false"
+        },
+        {
+            "group_name": "general",
+            "setting_key": "maintenanceMessage",
+            "value": "\"The website is briefly down for maintenance. Emergency services are unaffected \\u2014 call +91 90460 05557.\""
+        },
+        {
+            "group_name": "contact",
+            "setting_key": "phones",
+            "value": "[{\"label\":\"Reception\",\"number\":\"+91 90460 05557\",\"isPrimary\":true,\"showInHeader\":true,\"showInDock\":true},{\"label\":\"Emergency\",\"number\":\"+91 90460 05557\",\"isPrimary\":false,\"showInHeader\":false,\"showInDock\":true}]"
+        },
+        {
+            "group_name": "contact",
+            "setting_key": "emergencyNumber",
+            "value": "\"+91 90460 05557\""
+        },
+        {
+            "group_name": "contact",
+            "setting_key": "emails",
+            "value": "[{\"label\":\"General\",\"address\":\"tmh.bdn@gmail.com\",\"showInHeader\":true},{\"label\":\"HR\",\"address\":\"headhrtmh@gmail.com\",\"showInHeader\":false},{\"label\":\"HR (alternate)\",\"address\":\"hr.tmh002@gmail.com\",\"showInHeader\":false}]"
+        },
+        {
+            "group_name": "contact",
+            "setting_key": "whatsapp",
+            "value": "\"+91 90460 05557\""
+        },
+        {
+            "group_name": "contact",
+            "setting_key": "whatsappMessage",
+            "value": "\"Hello, I would like to ask about\""
+        },
+        {
+            "group_name": "contact",
+            "setting_key": "addressLines",
+            "value": "[{\"line\":\"The Sun Hospital\"},{\"line\":\"GT Road, Nabapally\"}]"
+        },
+        {
+            "group_name": "contact",
+            "setting_key": "city",
+            "value": "\"Bardhaman\""
+        },
+        {
+            "group_name": "contact",
+            "setting_key": "state",
+            "value": "\"West Bengal\""
+        },
+        {
+            "group_name": "contact",
+            "setting_key": "pincode",
+            "value": "\"713101\""
+        },
+        {
+            "group_name": "contact",
+            "setting_key": "mapEmbed",
+            "value": "\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3648.0!2d87.85!3d23.25\""
+        },
+        {
+            "group_name": "contact",
+            "setting_key": "mapLat",
+            "value": "23.2599"
+        },
+        {
+            "group_name": "contact",
+            "setting_key": "mapLng",
+            "value": "87.8615"
+        },
+        {
+            "group_name": "contact",
+            "setting_key": "directions",
+            "value": "\"Opposite the Nabapally bus stand, five minutes from Bardhaman station by toto.\""
+        },
+        {
+            "group_name": "contact",
+            "setting_key": "departmentLines",
+            "value": "[{\"department\":\"Emergency\",\"number\":\"+91 90460 05557\"},{\"department\":\"Cardiology\",\"number\":\"+91 90460 05557\"},{\"department\":\"Maternity\",\"number\":\"+91 90460 05557\"},{\"department\":\"Laboratory\",\"number\":\"+91 90460 05557\"}]"
+        },
+        {
+            "group_name": "social",
+            "setting_key": "social",
+            "value": "[{\"platform\":\"Facebook\",\"url\":\"https://facebook.com/thesunhospital\",\"showInHeader\":true,\"showInFooter\":true},{\"platform\":\"Instagram\",\"url\":\"https://instagram.com/thesunhospital\",\"showInHeader\":true,\"showInFooter\":true},{\"platform\":\"YouTube\",\"url\":\"https://youtube.com/@thesunhospital\",\"showInHeader\":false,\"showInFooter\":true},{\"platform\":\"LinkedIn\",\"url\":\"https://linkedin.com/company/thesunhospital\",\"showInHeader\":false,\"showInFooter\":true}]"
+        },
+        {
+            "group_name": "social",
+            "setting_key": "shareImage",
+            "value": "\"https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?q=80&w=1200&auto=format&fit=crop\""
+        },
+        {
+            "group_name": "social",
+            "setting_key": "languages",
+            "value": "[{\"code\":\"en\",\"label\":\"English\",\"enabled\":true},{\"code\":\"bn\",\"label\":\"বাংলা\",\"enabled\":true},{\"code\":\"hi\",\"label\":\"हिन्दी\",\"enabled\":false}]"
+        },
+        {
+            "group_name": "social",
+            "setting_key": "defaultLanguage",
+            "value": "\"en\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "ga4Id",
+            "value": "\"G-TMH2026XX\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "gtmId",
+            "value": "\"\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "searchConsoleTag",
+            "value": "\"\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "facebookPixel",
+            "value": "\"\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "smtpHost",
+            "value": "\"smtp.gmail.com\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "smtpPort",
+            "value": "587"
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "smtpUser",
+            "value": "\"\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "smtpPass",
+            "value": "\"\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "smtpFromName",
+            "value": "\"The Sun Hospital\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "smtpFromEmail",
+            "value": "\"tmh.bdn@gmail.com\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "smtpSecure",
+            "value": "\"tls\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "notifyEnquiryTo",
+            "value": "[{\"email\":\"tmh.bdn@gmail.com\"}]"
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "recaptchaSiteKey",
+            "value": "\"\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "recaptchaSecret",
+            "value": "\"\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "googlePlacesApiKey",
+            "value": "\"\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "googlePlaceId",
+            "value": "\"\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "googleRating",
+            "value": "\"4.9\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "googleReviewCount",
+            "value": "0"
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "googleReviewsUrl",
+            "value": "\"\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "liveChatProvider",
+            "value": "\"None\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "liveChatEmbed",
+            "value": "\"\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "liveChatFrom",
+            "value": "\"08:00\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "liveChatTo",
+            "value": "\"22:00\""
+        },
+        {
+            "group_name": "integrations",
+            "setting_key": "liveChatEnabled",
+            "value": "false"
+        },
+        {
+            "group_name": "theme",
+            "setting_key": "brandPrimary",
+            "value": "\"#2F9E44\""
+        },
+        {
+            "group_name": "theme",
+            "setting_key": "brandAccent",
+            "value": "\"#2E6CA8\""
+        },
+        {
+            "group_name": "theme",
+            "setting_key": "brandDeep",
+            "value": "\"#145A2B\""
+        },
+        {
+            "group_name": "theme",
+            "setting_key": "defaultTheme",
+            "value": "\"system\""
+        },
+        {
+            "group_name": "theme",
+            "setting_key": "headingFont",
+            "value": "\"Sora\""
+        },
+        {
+            "group_name": "theme",
+            "setting_key": "bodyFont",
+            "value": "\"Inter\""
+        },
+        {
+            "group_name": "theme",
+            "setting_key": "bannerStyle",
+            "value": "\"Photo with overlay\""
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "cookieEnabled",
+            "value": "true"
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "cookieMessage",
+            "value": "\"We use cookies to remember your language and theme, and to count visits. Nothing here identifies you.\""
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "cookieAcceptLabel",
+            "value": "\"Got it\""
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "cookieDeclineLabel",
+            "value": "\"No thanks\""
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "cookiePolicyUrl",
+            "value": "\"/contact\""
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "cookieRemember",
+            "value": "180"
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "adsEnabled",
+            "value": "true"
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "adsTitle",
+            "value": "\"Free Cardiac Screening Camp\""
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "adsBody",
+            "value": "\"ECG, blood pressure and a consultant review — no charge, 12–14 September, OPD block.\""
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "adsImage",
+            "value": "\"https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=900&auto=format&fit=crop\""
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "adsLink",
+            "value": "\"/contact\""
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "adsLinkLabel",
+            "value": "\"Book a slot\""
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "adsStart",
+            "value": "\"2026-08-01\""
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "adsEnd",
+            "value": "\"2026-09-14\""
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "adsFrequency",
+            "value": "\"days:7\""
+        },
+        {
+            "group_name": "popups",
+            "setting_key": "adsDismissible",
+            "value": "true"
+        },
+        {
+            "group_name": "seo",
+            "setting_key": "titlePattern",
+            "value": "\"%page% — The Sun Hospital\""
+        },
+        {
+            "group_name": "seo",
+            "setting_key": "defaultDescription",
+            "value": "\"The Sun Hospital \\u2014 a multispeciality hospital and nursing home in Bardhaman (Burdwan), West Bengal. Expert doctors, 24/7 emergency and a same-day laboratory.\""
+        },
+        {
+            "group_name": "seo",
+            "setting_key": "defaultOgImage",
+            "value": "\"https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?q=80&w=1200&auto=format&fit=crop\""
+        },
+        {
+            "group_name": "seo",
+            "setting_key": "robots",
+            "value": "\"index, follow\""
+        },
+        {
+            "group_name": "seo",
+            "setting_key": "sitemapUrl",
+            "value": "\"/sitemap.xml\""
+        },
+        {
+            "group_name": "seo",
+            "setting_key": "canonicalDomain",
+            "value": "\"https://thesunhospital.in\""
+        },
+        {
+            "group_name": "seo",
+            "setting_key": "googleVerification",
+            "value": "\"m_SRPbBmHs92iJ6Ur7YTBaOFtbAN5jNKTm5g93Qz1Kc\""
+        },
+        {
+            "group_name": "seo",
+            "setting_key": "defaultKeywords",
+            "value": "\"best hospital in Bardhaman, best nursing home in Bardhaman, hospital in Burdwan, nursing home in Burdwan, multispeciality hospital Bardhaman, 24x7 emergency hospital Bardhaman, best doctors in Bardhaman, ICU and critical care Bardhaman, maternity hospital Burdwan, cardiology hospital Bardhaman, pathology lab Bardhaman, The Sun Hospital\""
+        },
+        {
+            "group_name": "seo",
+            "setting_key": "twitterSite",
+            "value": "\"\""
+        }
+    ]
+}

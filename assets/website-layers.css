@@ -1,0 +1,30 @@
+/* =========================================================
+   Cascade-layer loader for the public site.
+
+   The site carries two full stylesheets:
+
+     • website.css        — the legacy sheet. Still the only home of the
+                            PHP-only components (doctor monograms `.doc-mono`,
+                            the Google-rating widget `.grating`, the mobile
+                            menu `.mm__*` and the desktop sub-menus `.nav-sub`).
+     • website-design.css — the current TSH design. The authority for every
+                            shared band and the chrome (hero, about, spec,
+                            track, why, lab, doc, blog, the footer, the nav).
+
+   Loaded as plain <link>s they fight: both define `.site-footer`, `.doc__card`,
+   `.track…` and so on, and the legacy values leak through wherever the design
+   sheet does not restate a property. Layering settles it once — the design
+   layer always wins a conflict, while the PHP-only classes, which exist in no
+   layer but `legacy`, keep their styles untouched.
+
+   `@import … layer()` is used rather than wrapping each file in `@layer { }`
+   on purpose: website.css has a (harmless, long-standing) unbalanced brace and
+   wrapping it would change what that brace closes. Importing loads each sheet
+   exactly as a <link> would, only into a named layer.
+
+   Reversible: delete this file and load website.css then website-design.css as
+   two <link>s again.
+   ========================================================= */
+@layer legacy, tshdesign;
+@import url("website.css") layer(legacy);
+@import url("website-design.css") layer(tshdesign);

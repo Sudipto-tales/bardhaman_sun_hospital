@@ -1,0 +1,4349 @@
+/* =========================================================
+   Teresa Memorial Hospital — inner pages
+   Loaded AFTER website.css. Adds only what the department
+   pages and the contact page need; everything shared
+   (tokens, nav, dock, spy, footer, .eyebrow, .btn-primary,
+   .arrow-link, .faq__*) still comes from website.css.
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. PAGE BANNER
+   Same clearance as the home hero (rail height + breathing
+   room) so the fixed brand rail never covers the title.
+   --------------------------------------------------------- */
+.pg-hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: flex-end;
+    min-height: clamp(440px, 62vh, 640px);
+    padding: calc(var(--rail-h) + clamp(40px, 7vh, 90px)) var(--sp-gutter) clamp(38px, 5vh, 64px);
+    margin: 0 var(--ft-inset);
+    /* mirrors the footer card — curve on the two outer corners */
+    border-radius: 0 0 var(--r-lg) var(--r-lg);
+    background: var(--surface-navy);
+    overflow: hidden;
+    color: #fff;
+}
+
+/* When a stats band follows, it rides up over the banner's foot
+   (see .pg-stats margin-top). Extra floor clearance keeps the
+   chips clear of it. */
+/* stats band is hidden, so the hero no longer reserves floor clearance */
+.pg-hero--stats {
+    padding-bottom: clamp(38px, 5vh, 64px);
+}
+
+.pg-hero__img {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* GSAP parallaxes this; the scale keeps edges covered while it moves */
+    transform: scale(1.08);
+    will-change: transform;
+}
+
+/* Two stacked washes: a vertical one so the text bottom-left always has
+   contrast, and a brand-tinted one so photos of any hue read as "ours". */
+.pg-hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(180deg, rgba(15, 59, 70, .55) 0%, rgba(15, 59, 70, .18) 34%, rgba(15, 59, 70, .88) 100%),
+        linear-gradient(115deg, rgba(30, 78, 124, .72) 0%, rgba(30, 122, 52, .28) 55%, rgba(15, 59, 70, .1) 100%);
+}
+
+/* faint ECG trace along the banner floor — echoes the footer's */
+.pg-hero__ecg {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    width: 100%;
+    height: 78px;
+    color: rgba(255, 255, 255, .28);
+    pointer-events: none;
+}
+
+/* outline ring bleeding off the right edge, like the hero capsule */
+.pg-hero__ring {
+    position: absolute;
+    top: 50%;
+    right: clamp(-160px, -6vw, -60px);
+    z-index: -1;
+    width: clamp(280px, 30vw, 480px);
+    aspect-ratio: 1;
+    transform: translateY(-50%);
+    border: 1px solid rgba(255, 255, 255, .18);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.pg-hero__ring::after {
+    content: '';
+    position: absolute;
+    inset: clamp(28px, 4vw, 62px);
+    border: 1px dashed rgba(255, 255, 255, .16);
+    border-radius: 50%;
+}
+
+.pg-hero__inner {
+    position: relative;
+    width: 100%;
+    max-width: 1360px;
+    margin-inline: auto;
+    display: grid;
+    gap: clamp(18px, 2.4vw, 30px);
+}
+
+/* --- breadcrumb --- */
+.pg-crumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .62);
+}
+
+.pg-crumb a {
+    color: rgba(255, 255, 255, .62);
+    text-decoration: none;
+    transition: color .3s var(--ease);
+}
+
+.pg-crumb a:hover {
+    color: #fff;
+}
+
+.pg-crumb i {
+    font-size: .6rem;
+    opacity: .55;
+}
+
+.pg-crumb [aria-current] {
+    color: #fff;
+}
+
+.pg-hero__head {
+    display: grid;
+    gap: 14px;
+    max-width: 44ch;
+}
+
+.pg-hero h1 {
+    font-family: var(--font-head);
+    font-size: var(--fs-display);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    color: #fff;
+}
+
+.pg-hero h1 strong {
+    font-weight: 800;
+    /* gradient wordmark — same crimson→magenta as .btn-primary */
+    background: linear-gradient(120deg, #FF8FA6, #FFC9A6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.pg-hero__lead {
+    font-size: clamp(1rem, .94rem + .3vw, 1.18rem);
+    color: rgba(255, 255, 255, .82);
+    max-width: 58ch;
+}
+
+.pg-hero__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 4px;
+}
+
+.pg-hero .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 26px;
+    border: 1px solid rgba(255, 255, 255, .35);
+    border-radius: var(--r-pill);
+    background: rgba(255, 255, 255, .06);
+    backdrop-filter: var(--glass-blur);
+    color: #fff;
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    text-decoration: none;
+    transition: background .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease);
+}
+
+.pg-hero .btn-ghost:hover {
+    background: rgba(255, 255, 255, .16);
+    border-color: rgba(255, 255, 255, .6);
+    transform: translateY(-2px);
+}
+
+/* --- glass chips sitting on the banner floor --- */
+.pg-hero__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.pg-hero__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 16px;
+    border: 1px solid rgba(255, 255, 255, .22);
+    border-radius: var(--r-pill);
+    background: rgba(255, 255, 255, .09);
+    backdrop-filter: var(--glass-blur);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: rgba(255, 255, 255, .92);
+}
+
+.pg-hero__chip i {
+    color: #FFB3C1;
+}
+
+/* ---------------------------------------------------------
+   2. GROWTH STATS
+   Numbers count up on scroll (see pages.js). The band is
+   pulled up so it straddles the banner's curved foot.
+   --------------------------------------------------------- */
+.pg-stats {
+    /* hidden site-wide by request — kept in the markup so it can be
+       restored by removing this one declaration */
+    display: none;
+    position: relative;
+    z-index: 3;
+    padding: 0 var(--sp-gutter);
+    margin-top: clamp(-72px, -5vw, -44px);
+    margin-bottom: var(--sp-section);
+}
+
+/* Inside a normal section the band has no banner foot to straddle, and the
+   section already pays the gutter — so no pull, no double padding. */
+.pg-stats--flow {
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: clamp(32px, 4vw, 56px);
+}
+
+.pg-stats__grid {
+    max-width: 1360px;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    box-shadow: var(--sh-lg);
+    overflow: hidden;
+}
+
+.pg-stat {
+    position: relative;
+    display: grid;
+    gap: 6px;
+    padding: clamp(24px, 2.6vw, 38px) clamp(20px, 2vw, 30px);
+    background: var(--surface);
+    transition: background .35s var(--ease);
+}
+
+.pg-stat::before {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 3px;
+    background: var(--grad-cta);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .45s var(--ease);
+}
+
+.pg-stat:hover {
+    background: var(--surface-alt);
+}
+
+.pg-stat:hover::before {
+    transform: scaleX(1);
+}
+
+.pg-stat__icon {
+    font-size: 1.15rem;
+    color: var(--action);
+}
+
+.pg-stat__num {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 1.3rem + 1.9vw, 3.1rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -.03em;
+    color: var(--ink);
+}
+
+.pg-stat__suffix {
+    color: var(--action);
+}
+
+.pg-stat__label {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.pg-stat__note {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: #1F8A5B;
+}
+
+.pg-stat__note i {
+    font-size: .65rem;
+}
+
+/* ---------------------------------------------------------
+   3. GENERIC PAGE SECTION
+   --------------------------------------------------------- */
+.pg-section {
+    position: relative;
+    padding: var(--sp-section) var(--sp-gutter);
+}
+
+.pg-section--alt {
+    background: var(--surface-alt);
+}
+
+.pg-section--tight {
+    padding-top: 0;
+}
+
+.pg-wrap {
+    max-width: 1360px;
+    margin-inline: auto;
+}
+
+/* ---------------------------------------------------------
+   4. OVERVIEW  (copy + checklist / image + floating badge)
+   --------------------------------------------------------- */
+.pg-intro {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    align-items: center;
+    gap: clamp(28px, 4vw, 72px);
+}
+
+.pg-intro__copy {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+}
+
+.pg-intro__copy h2 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink);
+}
+
+.pg-intro__copy h2 strong {
+    color: var(--action);
+}
+
+.pg-intro__copy p {
+    color: var(--ink-soft);
+}
+
+.pg-checks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    gap: 10px 20px;
+    margin-top: 4px;
+    list-style: none;
+}
+
+.pg-checks li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--ink);
+}
+
+.pg-checks i {
+    margin-top: .28em;
+    color: var(--action);
+}
+
+.pg-intro__media {
+    position: relative;
+}
+
+.pg-intro__media .img-stretch {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+}
+
+.pg-intro__media img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3.4;
+    object-fit: cover;
+}
+
+.pg-badge {
+    position: absolute;
+    left: clamp(-10px, -1vw, 0px);
+    bottom: clamp(-18px, -2vw, -10px);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    max-width: 82%;
+    padding: 16px 22px;
+    border-radius: var(--r-card);
+    background: var(--glass-bg-strong);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--sh-lg);
+}
+
+.pg-badge__icon {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--grad-cta);
+    color: #fff;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+}
+
+.pg-badge h4 {
+    font-family: var(--font-head);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.pg-badge p {
+    font-size: var(--fs-xs);
+    color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------
+   5. PROCEDURES / SERVICES CARDS
+   --------------------------------------------------------- */
+.pg-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: var(--sp-gap);
+    margin-top: clamp(28px, 3vw, 44px);
+}
+
+.pg-card {
+    position: relative;
+    display: grid;
+    gap: 12px;
+    align-content: start;
+    padding: var(--sp-card);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    background: var(--surface);
+    overflow: hidden;
+    transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+}
+
+.pg-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--grad-cool);
+    opacity: 0;
+    transition: opacity .4s var(--ease);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.pg-card>* {
+    position: relative;
+    z-index: 1;
+}
+
+.pg-card:hover {
+    transform: translateY(-6px);
+    border-color: transparent;
+    box-shadow: var(--sh-lg);
+}
+
+.pg-card:hover::after {
+    opacity: 1;
+}
+
+.pg-card__icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    aspect-ratio: 1;
+    border-radius: 14px;
+    background: var(--blue-50);
+    color: var(--navy);
+    font-size: 1.15rem;
+    transition: background .4s var(--ease), color .4s var(--ease);
+}
+
+.pg-card:hover .pg-card__icon {
+    background: rgba(255, 255, 255, .16);
+    color: #fff;
+}
+
+.pg-card h3 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h4);
+    font-weight: 700;
+    color: var(--ink);
+    transition: color .4s var(--ease);
+}
+
+.pg-card p {
+    font-size: var(--fs-sm);
+    color: var(--ink-soft);
+    transition: color .4s var(--ease);
+}
+
+.pg-card:hover h3 {
+    color: #fff;
+}
+
+.pg-card:hover p {
+    color: rgba(255, 255, 255, .8);
+}
+
+/* ---------------------------------------------------------
+   6. CONDITIONS  (two-column tick list on navy)
+   --------------------------------------------------------- */
+.pg-cond {
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    gap: clamp(28px, 4vw, 64px);
+    align-items: start;
+    padding: clamp(30px, 4vw, 60px);
+    border-radius: var(--r-lg);
+    background: var(--surface-navy);
+    color: rgba(255, 255, 255, .74);
+    overflow: hidden;
+}
+
+.pg-cond h2 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    line-height: 1.15;
+    color: #fff;
+}
+
+.pg-cond__intro {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+}
+
+.pg-cond__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+    gap: 2px;
+    list-style: none;
+}
+
+.pg-cond__list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: var(--r-sm);
+    font-size: var(--fs-sm);
+    color: rgba(255, 255, 255, .82);
+    transition: background .3s var(--ease), color .3s var(--ease);
+}
+
+.pg-cond__list li:hover {
+    background: rgba(255, 255, 255, .07);
+    color: #fff;
+}
+
+.pg-cond__list i {
+    color: #FF8FA6;
+    font-size: .8rem;
+}
+
+/* ---------------------------------------------------------
+   7. TEAM
+   --------------------------------------------------------- */
+/* The track is capped rather than 1fr. auto-fit with a 1fr maximum hands the
+   whole row to however many cards there are, so a department with one
+   consultant rendered a full-width card — and .pg-doc__img is 4/4.4, so that
+   photo came out taller than the viewport. A bounded track keeps the card the
+   same size whether the strip carries one doctor or nine; justify-content
+   centres the short rows instead of leaving them hugging the left edge. */
+.pg-team {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 260px));
+    justify-content: center;
+    gap: var(--sp-gap);
+    margin-top: clamp(28px, 3vw, 44px);
+}
+
+.pg-doc {
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    background: var(--surface);
+    overflow: hidden;
+    transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+
+.pg-doc:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--sh-lg);
+}
+
+.pg-doc__img {
+    position: relative;
+    overflow: hidden;
+}
+
+.pg-doc__img img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 4.4;
+    object-fit: cover;
+    transition: transform .6s var(--ease);
+}
+
+.pg-doc:hover .pg-doc__img img {
+    transform: scale(1.06);
+}
+
+.pg-doc__body {
+    display: grid;
+    gap: 4px;
+    padding: 18px var(--sp-card) 22px;
+}
+
+.pg-doc__body h4 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h4);
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.pg-doc__body p {
+    font-size: var(--fs-sm);
+    color: var(--ink-soft);
+}
+
+.pg-doc__qual {
+    font-size: var(--fs-xs);
+    color: var(--ink-mute);
+}
+
+/* Only on doctors who take appointments. Its absence is the message for the
+   rest — no link, no half-promise. */
+.pg-doc__appt {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 10px;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--action);
+    transition: gap .3s var(--ease);
+}
+
+.pg-doc__appt:hover {
+    gap: 11px;
+    text-decoration: underline;
+}
+
+/* On a phone the 260px track ceiling left a card narrower than the column it
+   sat in, with dead gutters either side of it. One full-width card per row
+   instead — same card, the size the screen actually has. The photo loses a
+   little height so the whole card still fits a fold. */
+@media (max-width: 560px) {
+    .pg-team {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    .pg-doc__img img,
+    .doc-mono--tall {
+        aspect-ratio: 4 / 3.6;
+    }
+
+    .pg-doc__body {
+        padding: 16px 18px 20px;
+    }
+}
+
+/* --- 7b. DOCTOR FINDER (doctors index only) ---------------
+   Search field over a row of filter pills, each pill a menu whose options and
+   counts are built from the rows on the page. The grid below is filtered in
+   place — nothing here reloads the page — so a card that leaves the results is
+   display:none rather than removed, and comes back the moment the query
+   loosens. */
+.dfind {
+    display: grid;
+    gap: 14px;
+    width: min(100%, 980px);
+    margin: clamp(22px, 3vw, 34px) auto 0;
+}
+
+.dfind__search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--surface);
+    box-shadow: var(--sh-sm);
+    transition: border-color .3s var(--ease), box-shadow .3s var(--ease);
+}
+
+.dfind__search:focus-within {
+    border-color: var(--crimson);
+    box-shadow: 0 0 0 4px rgba(47, 158, 68, .1);
+}
+
+.dfind__icon {
+    color: var(--ink-mute);
+}
+
+.dfind__input {
+    flex: 1;
+    min-width: 0;
+    height: 56px;
+    border: 0;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--ink);
+}
+
+.dfind__input:focus {
+    outline: none;
+}
+
+/* Safari draws its own × inside type=search, on top of ours. */
+.dfind__input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.dfind__clear {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--line);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: background .25s var(--ease), color .25s var(--ease);
+}
+
+.dfind__clear:hover {
+    background: var(--crimson);
+    color: #fff;
+}
+
+.dfind__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.dfind__sel {
+    position: relative;
+}
+
+.dfind__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+
+.dfind__pill > i {
+    color: var(--crimson);
+    font-size: .9rem;
+}
+
+.dfind__pill-txt {
+    display: grid;
+    text-align: left;
+}
+
+.dfind__pill-key {
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+}
+
+.dfind__pill-val {
+    font-size: .9rem;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.dfind__chev {
+    font-size: .7rem;
+    color: var(--ink-mute);
+    transition: transform .3s var(--ease);
+}
+
+.dfind__sel.is-open .dfind__pill,
+.dfind__sel.is-set .dfind__pill {
+    border-color: var(--crimson);
+}
+
+.dfind__sel.is-set .dfind__pill-val {
+    color: var(--crimson);
+}
+
+.dfind__sel.is-open .dfind__chev {
+    transform: rotate(180deg);
+}
+
+.dfind__menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 40;
+    display: none;
+    width: max-content;
+    min-width: 240px;
+    max-width: min(320px, 86vw);
+    max-height: 320px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 6px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--surface);
+    box-shadow: var(--sh-lg);
+}
+
+.dfind__sel.is-open .dfind__menu {
+    display: block;
+}
+
+.dfind__menu button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: .9rem;
+    text-align: left;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background .2s var(--ease), color .2s var(--ease);
+}
+
+.dfind__menu button:hover {
+    background: var(--line);
+}
+
+.dfind__menu button.is-on {
+    color: var(--crimson);
+    font-weight: 700;
+}
+
+.dfind__menu button span {
+    flex: 0 0 auto;
+    font-size: .72rem;
+    color: var(--ink-mute);
+}
+
+.dfind__reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 0;
+    border-radius: var(--r-pill);
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: color .25s var(--ease);
+}
+
+.dfind__reset:hover {
+    color: var(--crimson);
+}
+
+.dfind__count {
+    font-size: var(--fs-sm);
+    color: var(--ink-mute);
+}
+
+.dfind__count strong {
+    color: var(--ink);
+}
+
+.dfind__empty {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--ink-soft);
+}
+
+.dfind__more {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(24px, 3vw, 36px);
+}
+
+/* Filtered out, not removed — the card is still in the grid and comes back
+   without a re-render when the query loosens. */
+.pg-doc.is-out {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    /* Full-width pills, so a menu anchored to one can never open off the right
+       edge of the screen. */
+    .dfind__sel {
+        flex: 1 1 100%;
+    }
+
+    .dfind__pill {
+        width: 100%;
+    }
+
+    .dfind__pill-txt {
+        flex: 1;
+    }
+
+    .dfind__menu {
+        left: 0;
+        right: 0;
+        width: auto;
+        min-width: 0;
+        max-width: none;
+    }
+
+    .dfind__reset {
+        margin: 0 auto;
+    }
+
+    .dfind__count {
+        text-align: center;
+    }
+}
+
+/* ---------------------------------------------------------
+   8. CTA STRIP
+   --------------------------------------------------------- */
+.pg-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: clamp(20px, 3vw, 40px);
+    padding: clamp(30px, 4vw, 56px);
+    border-radius: var(--r-lg);
+    background: var(--grad-cta);
+    color: #fff;
+    box-shadow: var(--sh-action);
+}
+
+.pg-cta h2 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    line-height: 1.15;
+    color: #fff;
+}
+
+.pg-cta p {
+    margin-top: 8px;
+    color: rgba(255, 255, 255, .85);
+    max-width: 52ch;
+}
+
+.pg-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.pg-cta .btn-light {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 28px;
+    border-radius: var(--r-pill);
+    background: #fff;
+    color: var(--action);
+    font-weight: 700;
+    font-size: var(--fs-sm);
+    text-decoration: none;
+    transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+
+.pg-cta .btn-light:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .22);
+}
+
+.pg-cta .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 28px;
+    border: 1px solid rgba(255, 255, 255, .55);
+    border-radius: var(--r-pill);
+    color: #fff;
+    font-weight: 700;
+    font-size: var(--fs-sm);
+    text-decoration: none;
+    transition: background .3s var(--ease), transform .3s var(--ease);
+}
+
+.pg-cta .btn-outline:hover {
+    background: rgba(255, 255, 255, .16);
+    transform: translateY(-3px);
+}
+
+/* ---------------------------------------------------------
+   9. CONTACT PAGE
+   --------------------------------------------------------- */
+.ct-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+    gap: var(--sp-gap);
+}
+
+.ct-tile {
+    position: relative;
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    padding: clamp(24px, 2.4vw, 34px);
+    border-radius: var(--r-card);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--sh-sm);
+    transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+
+.ct-tile:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--sh-lg);
+}
+
+.ct-tile__icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--grad-cool);
+    color: #fff;
+    font-size: 1.15rem;
+}
+
+.ct-tile:nth-child(2) .ct-tile__icon {
+    background: var(--grad-cta);
+}
+
+.ct-tile:nth-child(3) .ct-tile__icon {
+    background: linear-gradient(135deg, var(--magenta), var(--navy));
+}
+
+.ct-tile:nth-child(4) .ct-tile__icon {
+    background: linear-gradient(135deg, var(--blue), var(--magenta));
+}
+
+.ct-tile h3 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h4);
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.ct-tile p,
+.ct-tile a {
+    font-size: var(--fs-sm);
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color .3s var(--ease);
+}
+
+.ct-tile a:hover {
+    color: var(--action);
+}
+
+/* --- form + side panel --- */
+.ct-split {
+    display: grid;
+    grid-template-columns: 1.25fr .75fr;
+    gap: clamp(24px, 3vw, 48px);
+    align-items: start;
+}
+
+.ct-form {
+    padding: clamp(26px, 3vw, 46px);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--surface);
+    box-shadow: var(--sh-md);
+}
+
+.ct-form__head {
+    display: grid;
+    gap: 10px;
+    margin-bottom: clamp(20px, 2.4vw, 32px);
+}
+
+.ct-form__head h2 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink);
+}
+
+.ct-form__head p {
+    color: var(--ink-soft);
+}
+
+.ct-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.ct-field {
+    display: grid;
+    gap: 7px;
+}
+
+.ct-field--full {
+    grid-column: 1 / -1;
+}
+
+.ct-field label {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.ct-optional {
+    margin-left: 6px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    text-transform: none;
+    color: var(--ink-mute);
+}
+
+.ct-help {
+    font-size: var(--fs-xs);
+    color: var(--ink-mute);
+}
+
+.ct-field input,
+.ct-field select,
+.ct-field textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    background: var(--surface-alt);
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    color: var(--ink);
+    transition: border-color .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease);
+}
+
+.ct-field textarea {
+    min-height: 132px;
+    resize: vertical;
+}
+
+.ct-field input:focus,
+.ct-field select:focus,
+.ct-field textarea:focus {
+    outline: none;
+    background: var(--surface);
+    border-color: var(--blue);
+    box-shadow: 0 0 0 4px var(--blue-50);
+}
+
+.ct-consent {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: var(--fs-xs);
+    color: var(--ink-soft);
+}
+
+.ct-consent input {
+    margin-top: .2em;
+    accent-color: var(--action);
+}
+
+.ct-form__foot {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 4px;
+}
+
+/* filled by pages.js after a successful (client-side) submit */
+.ct-note {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: #1F8A5B;
+}
+
+.ct-note.is-visible {
+    display: inline-flex;
+}
+
+/* the same line carrying a refusal from the server rather than a
+   confirmation — see post() in pages.js */
+.ct-note--error {
+    color: var(--crimson);
+}
+
+.ct-aside {
+    display: grid;
+    gap: var(--sp-gap);
+}
+
+.ct-panel {
+    padding: clamp(24px, 2.6vw, 36px);
+    border-radius: var(--r-lg);
+    background: var(--surface-navy);
+    color: rgba(255, 255, 255, .74);
+}
+
+.ct-panel h3 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h4);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 14px;
+}
+
+.ct-hours {
+    display: grid;
+    gap: 2px;
+    list-style: none;
+}
+
+.ct-hours li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    font-size: var(--fs-sm);
+}
+
+.ct-hours li:last-child {
+    border-bottom: 0;
+}
+
+.ct-hours strong {
+    color: #fff;
+    font-weight: 600;
+}
+
+.ct-emergency {
+    display: grid;
+    gap: 12px;
+    padding: clamp(24px, 2.6vw, 36px);
+    border-radius: var(--r-lg);
+    background: var(--grad-cta);
+    color: #fff;
+    box-shadow: var(--sh-action);
+}
+
+.ct-emergency h3 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h4);
+    font-weight: 700;
+    color: #fff;
+}
+
+.ct-emergency p {
+    font-size: var(--fs-sm);
+    color: rgba(255, 255, 255, .85);
+}
+
+.ct-emergency__num {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-head);
+    font-size: clamp(1.3rem, 1rem + .8vw, 1.7rem);
+    font-weight: 800;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* --- map --- */
+.ct-map {
+    position: relative;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--sh-md);
+    border: 1px solid var(--line);
+}
+
+.ct-map iframe {
+    display: block;
+    width: 100%;
+    height: clamp(320px, 46vh, 480px);
+    border: 0;
+    filter: saturate(.9);
+}
+
+.ct-map__card {
+    position: absolute;
+    left: clamp(14px, 2vw, 30px);
+    bottom: clamp(14px, 2vw, 30px);
+    display: grid;
+    gap: 6px;
+    max-width: min(330px, calc(100% - 28px));
+    padding: 20px 24px;
+    border-radius: var(--r-card);
+    background: var(--glass-bg-strong);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--sh-lg);
+}
+
+.ct-map__card h4 {
+    font-family: var(--font-head);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.ct-map__card p {
+    font-size: var(--fs-xs);
+    color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------
+   10. BLOG LISTING + ARTICLE
+   The cards reuse .blog__* from website.css; only the excerpt
+   line and the article page itself are new.
+   --------------------------------------------------------- */
+.pg-post__excerpt {
+    font-size: var(--fs-sm);
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+}
+
+.pg-post {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(280px, 26vw, 340px);
+    gap: clamp(28px, 4vw, 64px);
+    align-items: start;
+}
+
+/* --- byline --- */
+.pg-post__byline {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+}
+
+.pg-post__byline img {
+    width: 52px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.pg-post__byline h4 {
+    font-family: var(--font-head);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.pg-post__byline p {
+    font-size: var(--fs-xs);
+    color: var(--ink-mute);
+}
+
+/* --- article body ---
+   Spacing is owned by the owl selector so the generator never
+   has to think about margins between blocks. */
+.pg-post__body>*+* {
+    margin-top: clamp(16px, 1.6vw, 22px);
+}
+
+.pg-post__standfirst {
+    font-size: clamp(1.02rem, .96rem + .32vw, 1.22rem);
+    font-weight: 500;
+    color: var(--ink);
+}
+
+.pg-post__body h2 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-top: clamp(28px, 3vw, 44px);
+}
+
+.pg-post__body p {
+    color: var(--ink-soft);
+}
+
+.pg-post__body ul {
+    display: grid;
+    gap: 10px;
+    padding-left: 0;
+    list-style: none;
+}
+
+.pg-post__body ul li {
+    position: relative;
+    padding-left: 26px;
+    font-size: var(--fs-sm);
+    color: var(--ink-soft);
+}
+
+.pg-post__body ul li::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: .55em;
+    width: 7px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--grad-cta);
+}
+
+.pg-post__body blockquote {
+    padding: clamp(18px, 2vw, 26px) clamp(20px, 2.4vw, 32px);
+    border-left: 3px solid var(--action);
+    border-radius: 0 var(--r-card) var(--r-card) 0;
+    background: var(--surface-alt);
+    font-family: var(--font-head);
+    font-size: clamp(1rem, .94rem + .3vw, 1.15rem);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--ink);
+}
+
+/* --- tags --- */
+.pg-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: clamp(28px, 3vw, 40px);
+    padding-top: clamp(20px, 2.4vw, 30px);
+    border-top: 1px solid var(--line);
+}
+
+.pg-tag {
+    padding: 7px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--surface-alt);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--ink-soft);
+}
+
+/* --- sidebar --- */
+.pg-post__aside {
+    position: sticky;
+    top: calc(var(--rail-h) + 24px);
+    display: grid;
+    gap: var(--sp-gap);
+}
+
+.pg-related {
+    display: grid;
+    gap: 2px;
+    list-style: none;
+}
+
+.pg-related a {
+    display: grid;
+    gap: 4px;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    font-size: var(--fs-sm);
+    color: rgba(255, 255, 255, .82);
+    transition: color .3s var(--ease);
+}
+
+.pg-related li:last-child a {
+    border-bottom: 0;
+}
+
+.pg-related a span {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #FF8FA6;
+}
+
+.pg-related a:hover {
+    color: #fff;
+}
+
+/* --- listing sidebar: search + tags + recent ---
+   The article page gets away with a single navy .ct-panel. Three of
+   them stacked would turn the whole right column dark, so the two
+   interactive panels go light and only "Recent articles" stays navy. */
+.ct-panel--light {
+    border: 1px solid var(--line);
+    background: var(--surface-alt);
+    color: var(--ink-soft);
+}
+
+.ct-panel--light h3 {
+    color: var(--ink);
+}
+
+.blog__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: clamp(18px, 2vw, 26px);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ink-soft);
+}
+
+.blog__clear {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--surface);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: color .3s var(--ease), border-color .3s var(--ease);
+}
+
+.blog__clear:hover {
+    color: var(--action);
+    border-color: var(--action);
+}
+
+/* auto-fit at 270px would still reach for three columns inside the
+   two-thirds-width main column; auto-fill at 260 keeps it to two */
+.pg-post .blog__grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+    gap: clamp(20px, 2.4vw, 32px);
+}
+
+.blog-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.blog-search i {
+    position: absolute;
+    left: 14px;
+    font-size: .85rem;
+    color: var(--ink-mute);
+    pointer-events: none;
+}
+
+.blog-search input {
+    width: 100%;
+    padding: 12px 14px 12px 38px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--surface);
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    color: var(--ink);
+    transition: border-color .3s var(--ease), box-shadow .3s var(--ease);
+}
+
+.blog-search input:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px var(--blue-50);
+}
+
+/* the search UA clear button is a different shape in every browser and
+   .blog__clear already covers it */
+.blog-search input::-webkit-search-cancel-button {
+    display: none;
+}
+
+.blog-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* .pg-tag is a static <span> on the article page; as a filter chip it
+   needs the button reset and the two extra states */
+.blog-tags .pg-tag {
+    background: var(--surface);
+    cursor: pointer;
+    transition: background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+}
+
+.blog-tags .pg-tag:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+}
+
+.blog-tags .pg-tag.is-active {
+    background: var(--grad-cool);
+    border-color: transparent;
+    color: #fff;
+}
+
+.blog__empty {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    padding: clamp(36px, 5vw, 64px);
+    border: 1px dashed var(--line);
+    border-radius: var(--r-lg);
+    background: var(--surface-alt);
+    text-align: center;
+}
+
+.blog__empty i {
+    font-size: 1.8rem;
+    color: var(--ink-mute);
+}
+
+.blog__empty h3 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.blog__empty p {
+    max-width: 46ch;
+    color: var(--ink-soft);
+}
+
+/* --- single article banner ---------------------------------
+   The listing keeps .pg-hero. A post gets this instead: the
+   photo runs as a band under the fixed nav and the title card
+   is lifted over its foot, so the headline sits on paper
+   rather than on the picture and the utility row has somewhere
+   solid to live. */
+.post-hero {
+    position: relative;
+    isolation: isolate;
+    padding-bottom: clamp(24px, 3vw, 44px);
+}
+
+.post-hero__media {
+    position: relative;
+    isolation: isolate;
+    min-height: clamp(360px, 52vh, 560px);
+    /* matches .pg-hero — curve on the two outer corners only */
+    margin: 0 var(--ft-inset);
+    border-radius: 0 0 var(--r-lg) var(--r-lg);
+    background: var(--surface-navy);
+    overflow: hidden;
+}
+
+.post-hero__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* parallaxed in pages.js; the scale keeps the edges covered */
+    transform: scale(1.08);
+    will-change: transform;
+}
+
+/* Heavier at the top than .pg-hero__scrim: nothing of ours sits on the
+   photo here, but the nav does, and it is still in its white over-hero
+   palette until the page scrolls 90px. */
+.post-hero__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(15, 59, 70, .74) 0%, rgba(15, 59, 70, .22) 44%, rgba(15, 59, 70, .5) 100%),
+        linear-gradient(115deg, rgba(30, 78, 124, .6) 0%, rgba(30, 122, 52, .2) 58%, rgba(15, 59, 70, .05) 100%);
+}
+
+.post-hero__panel {
+    position: relative;
+    z-index: 2;
+    max-width: 1360px;
+    /* the overlap: never less than 64px, so the card always reads as
+       sitting on the photo rather than under it */
+    margin: clamp(-140px, -9vw, -64px) auto 0;
+    padding: 0 var(--sp-gutter);
+}
+
+.post-hero__card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: clamp(20px, 3vw, 48px);
+    padding: clamp(24px, 3.2vw, 46px);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--surface);
+    box-shadow: var(--sh-lg);
+}
+
+.post-hero__intro {
+    display: grid;
+    gap: 14px;
+}
+
+.post-hero__flags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.post-hero__flag {
+    padding: 6px 14px;
+    border-radius: var(--r-pill);
+    background: var(--surface-alt);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+}
+
+.post-hero__flag--cat {
+    background: var(--grad-cta);
+    color: #fff;
+}
+
+.post-hero__title {
+    font-family: var(--font-head);
+    font-size: var(--fs-h1);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -.02em;
+    color: var(--ink);
+    max-width: 22ch;
+}
+
+.post-hero__lead {
+    max-width: 58ch;
+    color: var(--ink-soft);
+}
+
+/* .pg-crumb is written for white-on-photo; doubled class so this wins
+   wherever the two end up in the cascade */
+.pg-crumb.pg-crumb--ink,
+.pg-crumb.pg-crumb--ink [aria-current] {
+    color: var(--ink-mute);
+}
+
+.pg-crumb.pg-crumb--ink a {
+    color: var(--blue);
+}
+
+.pg-crumb.pg-crumb--ink a:hover {
+    color: var(--action);
+}
+
+.post-hero__side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.post-hero__call {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 22px 7px 7px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--surface-alt);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: box-shadow .3s var(--ease), transform .3s var(--ease);
+}
+
+.post-hero__call:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sh-md);
+}
+
+.post-hero__call strong {
+    font-family: var(--font-head);
+    font-size: 1.02rem;
+    color: var(--navy);
+}
+
+.post-hero__call-ic {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--grad-cool);
+    color: #fff;
+    font-size: .9rem;
+}
+
+.post-hero__tools {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px;
+    border-radius: var(--r-pill);
+    background: var(--grad-cool);
+    box-shadow: var(--sh-md);
+}
+
+.post-hero__tool {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    aspect-ratio: 1;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: rgba(255, 255, 255, .84);
+    font-size: .9rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .3s var(--ease), color .3s var(--ease);
+}
+
+/* hairline between the buttons — a border would be clipped by the
+   circular radius, so it rides on a pseudo-element instead */
+.post-hero__tool+.post-hero__tool::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 24%;
+    bottom: 24%;
+    width: 1px;
+    background: rgba(255, 255, 255, .26);
+}
+
+.post-hero__tool:hover,
+.post-hero__tool:focus-visible {
+    background: rgba(255, 255, 255, .18);
+    color: #fff;
+}
+
+/* "Link copied" after the share fallback. Holds its line so the tool
+   row does not jump when the message appears. */
+.post-hero__flash {
+    min-height: 1.1em;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--ink-mute);
+    opacity: 0;
+    transition: opacity .3s var(--ease);
+}
+
+.post-hero__flash.is-visible {
+    opacity: 1;
+}
+
+/* --- related articles --------------------------------------
+   Same cards as the listing; only the head row is new. */
+.post-related__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: clamp(32px, 4vw, 56px);
+}
+
+.post-related__head .section-head {
+    margin-bottom: 0;
+}
+
+/* Grid rows already stretch the cards to a common height; this puts the
+   dek's slack under the dek so every "Read More" lands on one line. */
+.post-related .blog__card {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-related .blog__card .arrow-link {
+    margin-top: auto;
+    align-self: flex-start;
+}
+
+/* article tags are links now — .pg-tag is written for a <span> */
+a.pg-tag {
+    text-decoration: none;
+    transition: background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+}
+
+a.pg-tag:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+}
+
+/* ---------------------------------------------------------
+   11. ABOUT — PURPOSE BAND
+   A rounded photo strip with the copy sitting in its own
+   scrim, followed by the three pastel mission/vision/values
+   cards. Tints come from --tint-* so dark mode needs nothing
+   here.
+   --------------------------------------------------------- */
+.ab-banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: clamp(260px, 26vw, 380px);
+    padding: clamp(28px, 4vw, 64px);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.ab-banner img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
+/* horizontal wash — dense enough on the left for white text, gone by
+   the time it reaches the subject on the right */
+.ab-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg,
+            rgba(12, 31, 62, .94) 0%,
+            rgba(12, 31, 62, .78) 32%,
+            rgba(12, 31, 62, .42) 58%,
+            rgba(12, 31, 62, 0) 78%);
+}
+
+.ab-banner__copy {
+    max-width: 30ch;
+}
+
+.ab-banner h2 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h2);
+    font-weight: 800;
+    line-height: 1.12;
+    color: #fff;
+    margin-bottom: clamp(18px, 2vw, 28px);
+}
+
+.ab-banner h2 span {
+    display: block;
+}
+
+/* --- the three pastel cards --- */
+.ab-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--sp-gap);
+    margin-top: var(--sp-gap);
+}
+
+.ab-pillar {
+    position: relative;
+    padding: clamp(26px, 3vw, 40px);
+    border-radius: var(--r-lg);
+    background: var(--tint);
+    overflow: hidden;
+    transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+
+.ab-pillar:nth-child(1) {
+    --tint: var(--tint-blue);
+}
+
+.ab-pillar:nth-child(2) {
+    --tint: var(--tint-mint);
+}
+
+.ab-pillar:nth-child(3) {
+    --tint: var(--tint-lilac);
+}
+
+/* the loose bokeh circles in the top-right corner — decorative only */
+.ab-pillar::after {
+    content: '';
+    position: absolute;
+    top: -26px;
+    right: -26px;
+    width: 190px;
+    height: 150px;
+    pointer-events: none;
+    background:
+        radial-gradient(circle 26px at 30% 62%, var(--bokeh) 98%, transparent 100%),
+        radial-gradient(circle 20px at 58% 30%, var(--bokeh) 98%, transparent 100%),
+        radial-gradient(circle 32px at 74% 74%, var(--bokeh) 98%, transparent 100%),
+        radial-gradient(circle 16px at 86% 32%, var(--bokeh) 98%, transparent 100%);
+    --bokeh: rgba(255, 255, 255, .55);
+}
+
+[data-theme="dark"] .ab-pillar::after {
+    --bokeh: rgba(255, 255, 255, .07);
+}
+
+.ab-pillar:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--sh-md);
+}
+
+.ab-pillar__icon {
+    display: block;
+    font-size: 1.6rem;
+    color: var(--ink);
+    margin-bottom: clamp(30px, 5vw, 56px);
+}
+
+.ab-pillar h3 {
+    font-family: var(--font-head);
+    font-size: var(--fs-sm);
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 12px;
+}
+
+.ab-pillar p {
+    font-size: var(--fs-body);
+    color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------
+   12. ABOUT — PROOF MOSAIC
+   Two photos, a rating chip, a testimonial carousel and an
+   accreditation card, laid out on one 12-column grid so the
+   tiles interlock the way the reference does.
+   --------------------------------------------------------- */
+.ab-mosaic {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+        "photoA photoA photoA photoA photoA rating rating rating rating .      .      ."
+        "photoA photoA photoA photoA photoA photoB photoB photoB photoB photoB photoB photoB"
+        "quote  quote  quote  quote  quote  cred   cred   cred   cred   cred   cred   .";
+    gap: var(--sp-gap);
+    align-items: stretch;
+}
+
+.ab-tile {
+    position: relative;
+    border-radius: var(--r-card);
+    overflow: hidden;
+    min-height: 220px;
+}
+
+.ab-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .8s var(--ease);
+}
+
+.ab-tile:hover img {
+    transform: scale(1.05);
+}
+
+.ab-tile--a {
+    grid-area: photoA;
+}
+
+.ab-tile--b {
+    grid-area: photoB;
+}
+
+/* --- rating chip --- */
+.ab-rating {
+    grid-area: rating;
+    display: grid;
+    align-content: center;
+    gap: 6px;
+    padding: clamp(20px, 2.2vw, 30px);
+    border-radius: var(--r-card);
+    background: var(--tint-mint);
+}
+
+.ab-rating .eyebrow {
+    color: var(--ink-soft);
+    margin-bottom: 0;
+}
+
+/* The tile is widget/google-rating (base rules in website.css). Here it sits
+   on the mint panel rather than the cool gradient, so the greens and the
+   knocked-back track come from this side. */
+.grating--mosaic {
+    --grating-star: #2E9E6B;
+    --grating-empty: rgb(20 40 32 / .16);
+
+    color: var(--ink);
+}
+
+.grating--mosaic .grating__label {
+    color: var(--ink-soft);
+    opacity: 1;
+}
+
+.grating--mosaic .grating__score {
+    font-size: clamp(1.8rem, 1.2rem + 1.6vw, 2.6rem);
+}
+
+.grating--mosaic .grating__score i {
+    font-size: .8em;
+}
+
+.grating--mosaic .grating__bar {
+    background: rgb(20 40 32 / .1);
+}
+
+/* The mint panel is near-black in dark, so an ink-coloured empty star and an
+   ink-coloured bar track both disappear into it. */
+[data-theme="dark"] .grating--mosaic {
+    --grating-star: #58C99A;
+    --grating-empty: rgb(230 236 246 / .22);
+}
+
+[data-theme="dark"] .grating--mosaic .grating__bar {
+    background: rgb(230 236 246 / .16);
+}
+
+.grating--mosaic .grating__count {
+    color: var(--ink-soft);
+    opacity: 1;
+}
+
+.grating--mosaic .grating__link {
+    color: var(--action);
+    opacity: 1;
+}
+
+/* --- testimonial carousel --- */
+.ab-quote {
+    grid-area: quote;
+    position: relative;
+    display: grid;
+    align-content: space-between;
+    gap: clamp(20px, 2.4vw, 32px);
+    padding: clamp(26px, 3vw, 44px);
+    border-radius: var(--r-card);
+    background: var(--tint-lilac);
+}
+
+.ab-quote__mark {
+    font-family: var(--font-head);
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: .6;
+    color: var(--ink);
+    opacity: .22;
+}
+
+.ab-quote__track {
+    position: relative;
+}
+
+.ab-quote__slide {
+    display: none;
+    font-size: clamp(1rem, .94rem + .35vw, 1.2rem);
+    line-height: 1.62;
+    color: var(--ink);
+}
+
+.ab-quote__slide.is-active {
+    display: block;
+    animation: abQuoteIn .5s var(--ease) both;
+}
+
+@keyframes abQuoteIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.ab-quote__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.ab-quote__who {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ab-quote__who img {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, .6);
+}
+
+.ab-quote__name {
+    display: block;
+    font-weight: 700;
+    font-size: var(--fs-sm);
+    color: var(--ink);
+}
+
+.ab-quote__role {
+    display: block;
+    font-size: var(--fs-xs);
+    color: var(--ink-soft);
+}
+
+.ab-quote__nav {
+    display: flex;
+    gap: 10px;
+}
+
+.ab-quote__nav button {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--ink);
+    font-size: .8rem;
+    cursor: pointer;
+    transition: background .3s var(--ease), color .3s var(--ease), transform .3s var(--ease);
+}
+
+.ab-quote__nav button:hover {
+    background: var(--ink);
+    color: var(--surface);
+    transform: translateY(-2px);
+}
+
+.ab-quote__nav button:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+}
+
+/* --- accreditation card --- */
+.ab-cred {
+    grid-area: cred;
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(16px, 1.8vw, 24px);
+    padding: clamp(22px, 2.6vw, 34px);
+    border-radius: var(--r-card);
+    background: var(--tint-slate);
+}
+
+.ab-cred__icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--blue);
+    font-size: 1.4rem;
+}
+
+.ab-cred .eyebrow {
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+}
+
+.ab-cred h3 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h4);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 14px;
+}
+
+/* ---------------------------------------------------------
+   13. CAREERS — OPENINGS LIST
+   The list itself is rendered by pages.js from assets/jobs.js,
+   so nothing below assumes a fixed number of rows.
+   --------------------------------------------------------- */
+.cr-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: var(--sp-gap);
+}
+
+.cr-toolbar__count {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ink-soft);
+}
+
+.cr-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cr-filter label {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.cr-filter select {
+    padding: 11px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--surface);
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.cr-filter select:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 4px var(--blue-50);
+}
+
+.cr-jobs {
+    display: grid;
+    gap: 14px;
+    list-style: none;
+}
+
+.cr-job {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(16px, 2vw, 32px);
+    padding: clamp(20px, 2.4vw, 30px);
+    border: 1px solid var(--line);
+    border-left: 3px solid transparent;
+    border-radius: var(--r-card);
+    background: var(--surface);
+    transition: border-color .3s var(--ease), box-shadow .3s var(--ease), transform .3s var(--ease);
+}
+
+.cr-job:hover {
+    border-left-color: var(--action);
+    box-shadow: var(--sh-md);
+    transform: translateY(-3px);
+}
+
+.cr-job h3 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 12px;
+}
+
+.cr-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+}
+
+.cr-chips li {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 13px;
+    border-radius: var(--r-pill);
+    background: var(--surface-alt);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--ink-soft);
+}
+
+.cr-chips i {
+    font-size: .72em;
+    color: var(--blue);
+}
+
+.cr-job__posted {
+    display: block;
+    margin-top: 12px;
+    font-size: var(--fs-xs);
+    color: var(--ink-mute);
+}
+
+/* --- empty / not-found panels --- */
+.cr-empty,
+.cr-notfound {
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+    padding: clamp(36px, 5vw, 64px);
+    border: 1px dashed var(--line);
+    border-radius: var(--r-lg);
+    background: var(--surface-alt);
+    text-align: center;
+}
+
+.cr-empty i,
+.cr-notfound i {
+    font-size: 2rem;
+    color: var(--ink-mute);
+}
+
+.cr-empty h3,
+.cr-notfound h3 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.cr-empty p,
+.cr-notfound p {
+    max-width: 52ch;
+    color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------
+   14. JOB DETAIL + APPLICATION FORM
+   --------------------------------------------------------- */
+.cr-jd {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr);
+    gap: clamp(24px, 3vw, 48px);
+    align-items: start;
+}
+
+.cr-jd__head h2 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 16px;
+}
+
+.cr-jd__lead {
+    margin: 20px 0 clamp(24px, 3vw, 36px);
+    font-size: var(--fs-body);
+    color: var(--ink-soft);
+}
+
+.cr-jd__block {
+    margin-bottom: clamp(24px, 3vw, 36px);
+}
+
+.cr-jd__block h3 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h4);
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 14px;
+}
+
+.cr-jd__block ul {
+    display: grid;
+    gap: 11px;
+    list-style: none;
+}
+
+.cr-jd__block li {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    font-size: var(--fs-body);
+    color: var(--ink-soft);
+}
+
+.cr-jd__block li i {
+    margin-top: .3em;
+    font-size: .78em;
+    color: var(--action);
+}
+
+/* --- sticky summary card --- */
+.cr-jd__aside {
+    position: sticky;
+    top: calc(var(--rail-h) + 24px);
+    display: grid;
+    gap: 18px;
+    padding: clamp(22px, 2.6vw, 32px);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--surface-alt);
+}
+
+.cr-jd__aside h3 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h4);
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.cr-facts {
+    display: grid;
+    gap: 2px;
+    list-style: none;
+}
+
+.cr-facts li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--fs-sm);
+    color: var(--ink-soft);
+}
+
+.cr-facts li:last-child {
+    border-bottom: 0;
+}
+
+.cr-facts strong {
+    font-weight: 600;
+    color: var(--ink);
+    text-align: right;
+}
+
+/* --- file inputs --- */
+.cr-file {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 6px;
+    padding: 22px 18px;
+    border: 1.5px dashed var(--line);
+    border-radius: var(--r-sm);
+    background: var(--surface-alt);
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .3s var(--ease), background .3s var(--ease);
+}
+
+.cr-file:hover,
+.cr-file:focus-within {
+    border-color: var(--blue);
+    background: var(--blue-50);
+}
+
+/* the real control covers the box so the whole tile is the hit area,
+   and keyboard focus still lands somewhere visible */
+.cr-file input[type="file"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.cr-file i {
+    font-size: 1.3rem;
+    color: var(--blue);
+}
+
+.cr-file__label {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.cr-file__hint {
+    font-size: var(--fs-xs);
+    color: var(--ink-mute);
+}
+
+.cr-file__name {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    padding: 5px 12px;
+    border-radius: var(--r-pill);
+    background: var(--surface);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--ink);
+    word-break: break-all;
+}
+
+.cr-file__name.is-visible {
+    display: inline-flex;
+}
+
+.cr-file.has-error {
+    border-color: var(--action);
+    background: var(--crimson-50);
+}
+
+.cr-file__err {
+    display: none;
+    gap: 7px;
+    align-items: center;
+    margin-top: 7px;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--action);
+}
+
+.cr-file__err.is-visible {
+    display: flex;
+}
+
+.cr-optional {
+    grid-column: 1 / -1;
+    margin-top: 10px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+}
+
+/* --- fallback: mailto route, always visible because a mailto: link
+       cannot carry the CV attachment --- */
+.cr-mail {
+    display: flex;
+    align-items: center;
+    gap: clamp(14px, 1.6vw, 22px);
+    flex-wrap: wrap;
+    margin-top: var(--sp-gap);
+    padding: clamp(20px, 2.4vw, 30px);
+    border-radius: var(--r-lg);
+    background: var(--tint-blue);
+}
+
+.cr-mail i {
+    font-size: 1.5rem;
+    color: var(--blue);
+}
+
+.cr-mail p {
+    flex: 1 1 260px;
+    font-size: var(--fs-sm);
+    color: var(--ink-soft);
+}
+
+.cr-mail strong {
+    display: block;
+    font-family: var(--font-head);
+    font-size: var(--fs-h4);
+    color: var(--ink);
+    margin-bottom: 4px;
+}
+
+/* ---------------------------------------------------------
+   15. GALLERY + LIGHTBOX
+   The filter chips are .blog-tags — borrowed outright rather
+   than restyled, because a second chip shape on the same site
+   would only be the first one drifting.
+   --------------------------------------------------------- */
+.gal-filter {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    margin-top: clamp(20px, 2.4vw, 32px);
+}
+
+.gal-tags {
+    justify-content: center;
+    margin-top: 0;
+}
+
+/* The count beside a media-type chip. Small and quiet: it tells you how much
+   is behind the chip, it is not part of its name. */
+.gal-tags .pg-tag span {
+    margin-left: 6px;
+    opacity: .6;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+}
+
+.gal-tags--album .pg-tag {
+    font-size: var(--fs-sm);
+}
+
+/* --- the mosaic ---
+   Four columns of equal width and rows of one fixed height, so a tile is
+   whole cells and never a fraction of one. initGallery() gives each visible
+   tile its --w / --h out of a repeating six-tile pattern whose spans add up
+   to a full band, which is what leaves no hole to fill. The 2px is a seam,
+   not a gap: it keeps two photographs from bleeding into each other while
+   the block still reads as one surface. */
+.gal-grid {
+    --gal-cols: 4;
+    --gal-row: clamp(112px, 12.6vw, 186px);
+    display: grid;
+    grid-template-columns: repeat(var(--gal-cols), minmax(0, 1fr));
+    grid-auto-rows: var(--gal-row);
+    grid-auto-flow: dense;
+    gap: 2px;
+    margin-top: clamp(24px, 3vw, 40px);
+    padding: 2px;
+    border-radius: var(--r-lg);
+    background: var(--line-soft);
+    overflow: hidden;
+}
+
+/* A <button>, so every one of these is a reset */
+.gal-tile {
+    position: relative;
+    grid-column: span var(--w, 1);
+    grid-row: span var(--h, 1);
+    display: block;
+    padding: 0;
+    border: 0;
+    background: var(--surface-alt);
+    overflow: hidden;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+.gal-tile:focus-visible {
+    outline: 3px solid var(--crimson);
+    outline-offset: -3px;
+    z-index: 2;
+}
+
+.gal-tile__frame {
+    position: absolute;
+    inset: 0;
+    display: block;
+    overflow: hidden;
+    background: var(--surface-alt);
+}
+
+.gal-tile__frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .7s var(--ease);
+}
+
+.gal-tile:hover .gal-tile__frame img,
+.gal-tile:focus-visible .gal-tile__frame img {
+    transform: scale(1.07);
+}
+
+/* The title, over the picture and only while it is wanted. */
+.gal-tile__cap {
+    position: absolute;
+    inset: auto 0 0 0;
+    display: grid;
+    gap: 3px;
+    padding: 40px 16px 14px;
+    color: #fff;
+    background: linear-gradient(180deg, rgba(12, 31, 62, 0), rgba(12, 31, 62, .88));
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .35s var(--ease), transform .35s var(--ease);
+}
+
+.gal-tile:hover .gal-tile__cap,
+.gal-tile:focus-visible .gal-tile__cap {
+    opacity: 1;
+    transform: none;
+}
+
+.gal-tile__cap strong {
+    font-family: var(--font-head);
+    font-size: .98rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.gal-tile__cap span {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: var(--fs-xs);
+    line-height: 1.45;
+    color: rgba(255, 255, 255, .82);
+}
+
+/* A tile a finger cannot hover is a tile with no title at all, so on touch
+   the caption is simply there. */
+@media (hover: none) {
+    .gal-tile__cap {
+        opacity: 1;
+        transform: none;
+        padding-top: 30px;
+    }
+
+    .gal-tile__cap span {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .gal-grid {
+        --gal-cols: 2;
+        --gal-row: clamp(104px, 29vw, 156px);
+        border-radius: var(--r-card);
+    }
+}
+
+/* Sits over the poster on video and YouTube rows — the one thing that says
+   this tile opens a player rather than a photograph. */
+.gal-tile__play {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    background: linear-gradient(180deg, rgba(15, 59, 70, .12), rgba(15, 59, 70, .5));
+}
+
+.gal-tile__play i {
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    padding-left: 4px;
+    border-radius: 50%;
+    background: var(--crimson);
+    box-shadow: 0 10px 26px rgba(15, 59, 70, .35);
+    font-size: 1.1rem;
+    transition: transform .4s var(--ease);
+}
+
+.gal-tile:hover .gal-tile__play i {
+    transform: scale(1.08);
+}
+
+.gal-tile__badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    border-radius: var(--r-pill);
+    background: rgba(12, 31, 62, .78);
+    color: #fff;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    backdrop-filter: blur(6px);
+}
+
+/* --- the channel rail ---
+   Two identical runs of the same cards inside a track twice their width; the
+   animation carries it exactly one run and starts again, so the loop has no
+   seam and nothing is measured in JavaScript. The cards carry their gap as a
+   right margin rather than the track carrying it as `gap`, because a gap is
+   one short on the last card and that missing 18px is exactly the jump you
+   would see once a minute. */
+.gal-yt {
+    padding-top: 0;
+}
+
+.gal-yt__head {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    text-align: center;
+}
+
+.gal-yt__title {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-head);
+    font-size: var(--fs-h2);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--navy);
+}
+
+.gal-yt__title .fa-youtube {
+    color: #ff0033;
+}
+
+.gal-yt__arrow {
+    font-size: .7em;
+    color: var(--crimson);
+    transition: transform .3s var(--ease);
+}
+
+a.gal-yt__title:hover .gal-yt__arrow {
+    transform: translateX(7px);
+}
+
+.gal-yt__sub {
+    max-width: 58ch;
+    color: var(--ink-soft);
+}
+
+.gal-yt__rail {
+    margin-top: clamp(16px, 2.2vw, 28px);
+    /* room for the card's lift and its shadow, which `overflow: hidden`
+       would otherwise shave off */
+    padding: 12px 0 20px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.gal-yt__track {
+    display: flex;
+    width: max-content;
+    animation: yt-drift var(--yt-time, 60s) linear infinite;
+}
+
+/* Left to right: the run starts one width back and arrives at nought. */
+@keyframes yt-drift {
+    from {
+        transform: translate3d(-50%, 0, 0);
+    }
+
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.gal-yt__rail:hover .gal-yt__track,
+.gal-yt__rail:focus-within .gal-yt__track {
+    animation-play-state: paused;
+}
+
+.yt-card {
+    position: relative;
+    flex: 0 0 auto;
+    width: clamp(228px, 23vw, 316px);
+    aspect-ratio: 16 / 9;
+    margin-right: 18px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--r-card);
+    background: var(--navy);
+    overflow: hidden;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    box-shadow: var(--sh-sm);
+    transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+
+.yt-card:hover,
+.yt-card:focus-visible {
+    transform: translateY(-5px);
+    box-shadow: var(--sh-lg);
+}
+
+.yt-card:focus-visible {
+    outline: 3px solid var(--crimson);
+    outline-offset: 2px;
+}
+
+.yt-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .6s var(--ease);
+}
+
+.yt-card:hover img {
+    transform: scale(1.06);
+}
+
+.yt-card__play {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    background: linear-gradient(180deg, rgba(12, 31, 62, .05), rgba(12, 31, 62, .34));
+}
+
+.yt-card__play i {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    padding-left: 4px;
+    border-radius: 50%;
+    background: var(--crimson);
+    box-shadow: 0 10px 26px rgba(15, 59, 70, .4);
+    font-size: 1rem;
+    transition: transform .4s var(--ease);
+}
+
+.yt-card:hover .yt-card__play i {
+    transform: scale(1.1);
+}
+
+/* Nothing is written on a card until it is hovered or focused. */
+.yt-card__title {
+    position: absolute;
+    inset: auto 0 0 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    padding: 34px 14px 13px;
+    background: linear-gradient(180deg, rgba(12, 31, 62, 0), rgba(12, 31, 62, .9));
+    color: #fff;
+    font-family: var(--font-head);
+    font-size: .93rem;
+    font-weight: 700;
+    line-height: 1.3;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity .35s var(--ease), transform .35s var(--ease);
+}
+
+.yt-card:hover .yt-card__title,
+.yt-card:focus-visible .yt-card__title {
+    opacity: 1;
+    transform: none;
+}
+
+@media (hover: none) {
+    .yt-card__title {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* Motion off: the rail stops where it is and becomes a thing you push. */
+@media (prefers-reduced-motion: reduce) {
+    .gal-yt__track {
+        animation: none;
+    }
+
+    .gal-yt__rail {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+    }
+
+    .yt-card {
+        scroll-snap-align: start;
+    }
+}
+
+.gal-empty,
+.gal-none {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    margin-top: clamp(24px, 3vw, 40px);
+    padding: clamp(36px, 5vw, 64px);
+    border: 1px dashed var(--line);
+    border-radius: var(--r-lg);
+    background: var(--surface-alt);
+    text-align: center;
+}
+
+.gal-empty i,
+.gal-none i {
+    font-size: 2rem;
+    color: var(--ink-mute);
+}
+
+.gal-empty h3,
+.gal-none h3 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.gal-empty p,
+.gal-none p {
+    max-width: 52ch;
+    color: var(--ink-soft);
+}
+
+/* --- the viewer --- */
+/* Lenis lives inside website.js and is not reachable from here, so the page
+   is pinned rather than paused. The dialog covers the viewport either way. */
+body.lb-open {
+    overflow: hidden;
+}
+
+.lb {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+    padding: clamp(16px, 4vw, 56px);
+    background: rgba(8, 18, 36, .93);
+    animation: lbIn .25s var(--ease);
+}
+
+@keyframes lbIn {
+    from {
+        opacity: 0;
+    }
+}
+
+.lb__figure {
+    display: grid;
+    gap: 14px;
+    width: min(1100px, 100%);
+    max-height: 100%;
+}
+
+/* Fixed aspect, so swapping a portrait photo for a 16:9 video does not make
+   the whole viewer jump size between arrow presses. */
+.lb__stage {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    max-height: 74vh;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    background: #000;
+}
+
+.lb__stage img,
+.lb__stage video,
+.lb__stage iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: contain;
+    background: #000;
+}
+
+.lb__cap {
+    display: grid;
+    gap: 3px;
+    color: #fff;
+    text-align: center;
+}
+
+.lb__cap strong {
+    font-family: var(--font-head);
+    font-size: 1.06rem;
+    font-weight: 700;
+}
+
+.lb__cap span {
+    font-size: var(--fs-sm);
+    color: rgba(255, 255, 255, .72);
+}
+
+.lb__count {
+    font-size: var(--fs-xs);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .5);
+}
+
+.lb__close,
+.lb__nav {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 1px solid rgba(255, 255, 255, .22);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .1);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background .3s var(--ease), transform .3s var(--ease);
+}
+
+.lb__close:hover,
+.lb__nav:hover {
+    background: var(--crimson);
+    border-color: transparent;
+    transform: scale(1.06);
+}
+
+.lb__close {
+    top: clamp(12px, 2vw, 24px);
+    right: clamp(12px, 2vw, 24px);
+}
+
+.lb__nav {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.lb__nav:hover {
+    transform: translateY(-50%) scale(1.06);
+}
+
+.lb__nav--prev {
+    left: clamp(8px, 2vw, 24px);
+}
+
+.lb__nav--next {
+    right: clamp(8px, 2vw, 24px);
+}
+
+/* ---------------------------------------------------------
+   15b. LEGAL DOCUMENT (terms, privacy)
+   A contents rail and a column of numbered prose. The rail is
+   built from the same array as the body, so it can never list
+   a section that is not there.
+
+   Its own breakpoint lives here rather than in §16: the
+   document is one block and reads better with its stacking
+   rule beside the rule it undoes.
+   --------------------------------------------------------- */
+.lgl {
+    display: grid;
+    grid-template-columns: clamp(220px, 22vw, 290px) minmax(0, 1fr);
+    gap: clamp(28px, 4vw, 60px);
+    align-items: start;
+}
+
+.lgl__toc {
+    position: sticky;
+    top: calc(var(--rail-h) + 24px);
+    padding: clamp(18px, 2vw, 26px);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--r-card);
+    background: var(--surface-alt);
+}
+
+.lgl__toc-head {
+    margin: 0 0 12px;
+    font-family: var(--font-body);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+}
+
+.lgl__toc ol {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lgl__toc a {
+    display: flex;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: var(--r-sm);
+    font-size: var(--fs-sm);
+    line-height: 1.35;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: background .18s var(--ease), color .18s var(--ease);
+}
+
+.lgl__toc a span {
+    color: var(--ink-mute);
+    font-variant-numeric: tabular-nums;
+}
+
+.lgl__toc a:hover,
+.lgl__toc a:focus-visible {
+    background: var(--surface);
+    color: var(--crimson);
+}
+
+.lgl__toc a:hover span,
+.lgl__toc a:focus-visible span {
+    color: var(--crimson);
+}
+
+/* --- the document --- */
+.lgl__doc>*+* {
+    margin-top: clamp(18px, 2vw, 26px);
+}
+
+.lgl__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 7px 14px;
+    border-radius: var(--r-pill);
+    background: var(--surface-alt);
+    font-size: var(--fs-xs);
+    color: var(--ink-mute);
+}
+
+.lgl__lead {
+    margin: 0;
+    font-size: clamp(1rem, .95rem + .28vw, 1.14rem);
+    line-height: 1.7;
+    color: var(--ink);
+}
+
+/* the anchor a rail link lands on sits under the fixed header
+   without this */
+.lgl__sec {
+    scroll-margin-top: calc(var(--rail-h) + 20px);
+}
+
+.lgl__sec+.lgl__sec {
+    margin-top: clamp(26px, 3vw, 40px);
+}
+
+.lgl__sec h2 {
+    display: flex;
+    gap: 10px;
+    margin: 0 0 12px;
+    font-family: var(--font-head);
+    font-size: var(--fs-h4);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--ink);
+}
+
+.lgl__sec h2 span {
+    color: var(--crimson);
+    font-variant-numeric: tabular-nums;
+}
+
+.lgl__sec p {
+    margin: 0;
+    line-height: 1.78;
+    color: var(--ink-soft);
+}
+
+.lgl__sec p+p,
+.lgl__sec p+ul {
+    margin-top: 12px;
+}
+
+.lgl__sec ul {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.lgl__sec ul li {
+    position: relative;
+    padding-left: 26px;
+    line-height: 1.7;
+    font-size: var(--fs-sm);
+    color: var(--ink-soft);
+}
+
+.lgl__sec ul li::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: .62em;
+    width: 7px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--grad-cta);
+}
+
+.lgl__doc a {
+    color: var(--crimson);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* --- the closing panel --- */
+.lgl__ask {
+    margin-top: clamp(32px, 3.6vw, 48px);
+    padding: clamp(22px, 2.6vw, 34px);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--surface-alt);
+}
+
+.lgl__ask h3 {
+    margin: 0 0 8px;
+    font-family: var(--font-head);
+    font-size: var(--fs-h4);
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.lgl__ask p {
+    margin: 0;
+    color: var(--ink-soft);
+}
+
+.lgl__ask-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+@media (max-width: 900px) {
+
+    .lgl {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* above the document it indexes, and no longer pinned:
+       a sticky card on a phone is a card in the way */
+    .lgl__toc {
+        position: static;
+        order: -1;
+    }
+
+    .lgl__toc ol {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+}
+
+/* ---------------------------------------------------------
+   16. RESPONSIVE
+   --------------------------------------------------------- */
+@media (max-width: 1024px) {
+
+    .ab-pillars {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* the interlock only reads at width — below it the tiles stack in
+       reading order */
+    .ab-mosaic {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "photoA"
+            "rating"
+            "photoB"
+            "quote"
+            "cred";
+    }
+
+    .ab-tile {
+        min-height: 260px;
+    }
+
+    .cr-jd {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .cr-jd__aside {
+        position: static;
+    }
+
+
+    .pg-intro,
+    .pg-cond,
+    .ct-split,
+    .pg-post {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .pg-post__aside {
+        position: static;
+    }
+
+    /* stacked, the search and tags belong above the results they filter.
+       Only on the listing — the article page's aside is supplementary and
+       stays where it is. */
+    .blog__layout .pg-post__aside {
+        order: -1;
+    }
+
+    .pg-hero {
+        min-height: clamp(400px, 56vh, 520px);
+    }
+
+    .pg-hero--stats {
+        padding-bottom: clamp(38px, 5vh, 64px);
+    }
+
+    .pg-stats:not(.pg-stats--flow) {
+        margin-top: clamp(-52px, -4vw, -32px);
+    }
+
+    .pg-cta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .post-hero__media {
+        min-height: clamp(300px, 42vh, 420px);
+    }
+
+    .post-hero__card {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* one column, so the utility stack becomes a row and reads left to
+       right with the rest of the card */
+    .post-hero__side {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .post-hero__flash {
+        flex-basis: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .ab-pillars {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* The arrows would sit on top of the picture at this width. They go to the
+       bottom corners, beside the caption, where a thumb is anyway. */
+    .lb__nav {
+        top: auto;
+        bottom: clamp(12px, 4vw, 24px);
+        width: 42px;
+        height: 42px;
+        transform: none;
+    }
+
+    .lb__nav:hover {
+        transform: scale(1.06);
+    }
+
+    /* no room to keep the photo readable beside the copy — flood the
+       whole tile instead of washing only the left third */
+    .ab-banner::before {
+        background: linear-gradient(180deg, rgba(12, 31, 62, .72), rgba(12, 31, 62, .92));
+    }
+
+    .ab-banner__copy {
+        max-width: none;
+    }
+
+    .ab-quote__foot {
+        justify-content: flex-start;
+    }
+
+    .cr-job {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .cr-job .arrow-link {
+        justify-self: start;
+    }
+
+    .pg-hero {
+        border-radius: 0 0 var(--r-card) var(--r-card);
+    }
+
+    .pg-hero__ring {
+        display: none;
+    }
+
+    .pg-stats:not(.pg-stats--flow) {
+        margin-top: -28px;
+    }
+
+    .ct-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .pg-badge {
+        position: static;
+        max-width: none;
+        margin-top: 14px;
+    }
+
+    .post-hero__media {
+        border-radius: 0 0 var(--r-card) var(--r-card);
+    }
+
+    /* the card is nearly the full width here, so a deep overlap would
+       hide most of the photo */
+    .post-hero__panel {
+        margin-top: -48px;
+    }
+
+    .post-hero__title {
+        font-size: var(--fs-h2);
+        max-width: none;
+    }
+
+    .post-hero__call {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .pg-hero__img,
+    .post-hero__img,
+    .pg-doc__img img,
+    .ab-tile:hover img {
+        transform: none;
+    }
+
+    .ab-quote__slide.is-active {
+        animation: none;
+    }
+}
+
+/* ---------------------------------------------------------
+   17. PRINT
+   The article page carries a print button, so paper is a real
+   target: drop the chrome and everything that is navigation
+   rather than content.
+   --------------------------------------------------------- */
+/* ---------------------------------------------------------
+   SHARE SHEET
+   Built by initPostHero() on first use and appended to <body>,
+   so it sits above the dock and the popups. Centred dialog on
+   a desktop, bottom sheet on a phone — the same markup.
+   --------------------------------------------------------- */
+.share-sheet {
+    position: fixed;
+    inset: 0;
+    /* over the cookie bar (1300) and the brand rail (1200); the ads
+       popup at 1400 stays on top, since it is modal on arrival */
+    z-index: 1350;
+    display: grid;
+    place-items: center;
+    padding: clamp(12px, 3vw, 40px);
+}
+
+.share-sheet[hidden] {
+    display: none;
+}
+
+.share-sheet__scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 18, 36, .55);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    transition: opacity .22s var(--ease);
+}
+
+.share-sheet.is-open .share-sheet__scrim {
+    opacity: 1;
+}
+
+.share-sheet__panel {
+    position: relative;
+    width: min(460px, 100%);
+    display: grid;
+    gap: 16px;
+    padding: clamp(18px, 2.4vw, 26px);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    box-shadow: var(--sh-lg);
+    opacity: 0;
+    transform: translateY(14px) scale(.98);
+    transition: opacity .22s var(--ease), transform .28s var(--ease);
+}
+
+.share-sheet.is-open .share-sheet__panel {
+    opacity: 1;
+    transform: none;
+}
+
+.share-sheet__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.share-sheet__head h3 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h4);
+    color: var(--ink);
+}
+
+.share-sheet__x {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--surface-alt);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: background .25s var(--ease), color .25s var(--ease);
+}
+
+.share-sheet__x:hover {
+    background: var(--ink);
+    color: #fff;
+}
+
+.share-sheet__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.share-sheet__net {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    padding: 14px 6px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-align: center;
+    transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+
+.share-sheet__net:hover {
+    transform: translateY(-3px);
+    border-color: transparent;
+    box-shadow: var(--sh-md);
+}
+
+.share-sheet__ic {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--r-pill);
+    font-size: 1.05rem;
+    color: #fff;
+    background: var(--ink);
+}
+
+/* each network keeps its own colour: the icon is the only thing
+   people actually scan for in a sheet this size */
+.share-sheet__net--whatsapp .share-sheet__ic {
+    background: #25D366;
+}
+
+.share-sheet__net--facebook .share-sheet__ic {
+    background: #1877F2;
+}
+
+.share-sheet__net--x .share-sheet__ic {
+    background: #14171A;
+}
+
+.share-sheet__net--linkedin .share-sheet__ic {
+    background: #0A66C2;
+}
+
+.share-sheet__net--telegram .share-sheet__ic {
+    background: #229ED9;
+}
+
+.share-sheet__net--email .share-sheet__ic {
+    background: var(--grad-cta);
+}
+
+.share-sheet__copy {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.share-sheet__copy input {
+    flex: 1;
+    min-width: 0;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    background: var(--surface-alt);
+    color: var(--ink-soft);
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+}
+
+.share-sheet__copy button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 0;
+    border-radius: var(--r-sm);
+    background: var(--grad-cta);
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: var(--sh-action);
+}
+
+.share-sheet__more {
+    padding: 11px;
+    border: 1px dashed var(--line);
+    border-radius: var(--r-sm);
+    background: transparent;
+    color: var(--ink-soft);
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    cursor: pointer;
+}
+
+body.is-share-open {
+    overflow: hidden;
+}
+
+@media (max-width: 560px) {
+
+    /* a phone gets the platform idiom: the panel rises from the
+       bottom edge and spans the full width */
+    .share-sheet {
+        align-items: end;
+        padding: 0;
+    }
+
+    .share-sheet__panel {
+        width: 100%;
+        border-radius: var(--r-lg) var(--r-lg) 0 0;
+        transform: translateY(100%);
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+    }
+
+    .share-sheet__copy {
+        flex-direction: column;
+    }
+
+    .share-sheet__copy input {
+        padding: 12px;
+    }
+
+    .share-sheet__copy button {
+        justify-content: center;
+    }
+}
+
+/* the print stamp is markup on every article page and has to stay
+   off the screen until paper asks for it */
+.post-print-mark {
+    display: none;
+}
+
+@media print {
+
+    .topbar,
+    .brand-rail,
+    .nav-shell,
+    .mobile-menu,
+    .pg-spy,
+    .dock,
+    .to-top,
+    .prefooter,
+    .ft__bottom,
+    .site-footer,
+    .post-hero__side,
+    .post-hero__card .pg-crumb,
+    .pg-post__byline img,
+    .post-related,
+    .pg-cta,
+    .pg-post__aside,
+    .lgl__toc,
+    .lgl__ask,
+    .pop-ad,
+    .pop-cookie,
+    .share-sheet,
+    .share-sheet__scrim {
+        display: none !important;
+    }
+
+    /* the sheet is the article and its photo; the shell around them
+       carried colour and shadow that only cost ink */
+    .pg-post,
+    .lgl,
+    .pg-section > .pg-wrap {
+        display: block !important;
+        max-width: none;
+    }
+
+    .post-print-mark {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 26px;
+        padding-top: 12px;
+        border-top: 1px solid #d8d8d8;
+        break-inside: avoid;
+        text-align: right;
+    }
+
+    .post-print-mark img {
+        width: 46px;
+        height: auto;
+    }
+
+    .post-print-mark__txt {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.3;
+    }
+
+    .post-print-mark__txt strong {
+        font-size: 12pt;
+    }
+
+    .post-print-mark__txt span {
+        font-size: 9pt;
+        color: #666;
+    }
+
+    /* the same mark, ghosted behind the body copy: browsers repeat a
+       fixed box on every sheet, which is what a watermark wants */
+    .pg-post__body {
+        position: relative;
+    }
+
+    .pg-post__body::before {
+        content: '';
+        position: fixed;
+        inset: 38% 0 auto 0;
+        height: 260px;
+        background: url('logo-teresa.png') center / contain no-repeat;
+        opacity: .06;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    .post-hero__media {
+        min-height: 0;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .post-hero__img {
+        position: static;
+        height: auto;
+        max-height: 240px;
+        transform: none;
+    }
+
+    .post-hero__scrim {
+        display: none;
+    }
+
+    .post-hero__panel {
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .post-hero__card {
+        display: block;
+        padding: 0;
+        border: 0;
+        box-shadow: none;
+    }
+
+    /* the layout grids collapse on their own once the aside is gone, but
+       the section rhythm is tuned for screens */
+    .pg-section {
+        padding: 18px 0;
+    }
+
+    /* GSAP leaves reveal targets at opacity 0 until they scroll into
+       view — nothing scrolls on paper */
+    [class] {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* =====================================================
+   ADMIN AUTH — /admin and /admin/login
+
+   The panel's own stylesheet is phase 5.1 and lives under
+   html/admin/, which is not served. These are the few
+   rules the sign-in screen needs, on the site's own
+   tokens, so the door to the panel looks like the rest of
+   the hospital rather than like an unstyled form.
+   ===================================================== */
+.adm-shell {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background: var(--surface-alt);
+    padding: 32px 20px;
+}
+
+.adm-auth {
+    width: 100%;
+    max-width: 440px;
+}
+
+.adm-auth__card {
+    display: grid;
+    gap: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 32px 28px;
+    box-shadow: 0 24px 60px rgba(12, 31, 62, .10);
+}
+
+.adm-auth__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.adm-auth__brand img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.adm-auth__card h1 {
+    margin: 6px 0 0;
+    font-size: 1.6rem;
+}
+
+.adm-auth__lead {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: .92rem;
+    line-height: 1.55;
+}
+
+.adm-field {
+    display: grid;
+    gap: 6px;
+}
+
+.adm-field span {
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+}
+
+.adm-field input {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+}
+
+.adm-field input:focus-visible {
+    outline: 2px solid var(--crimson);
+    outline-offset: 1px;
+}
+
+.adm-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .86rem;
+    color: var(--ink-soft);
+}
+
+.adm-auth__submit {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+
+/* hidden until there is something to say — an empty status line
+   still reserves height and reads as a layout bug */
+.adm-auth__note {
+    margin: 0;
+    color: var(--crimson);
+    font-size: .88rem;
+}
+
+.adm-auth__back {
+    color: var(--ink-mute);
+    font-size: .86rem;
+    text-decoration: none;
+}
+
+.adm-auth__back:hover {
+    color: var(--crimson);
+}
+/* ---------------------------------------------------------
+   4b. ABOUT — hexagon collage + copy (reference-styled)
+   --------------------------------------------------------- */
+.pg-about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(28px, 4.5vw, 80px);
+}
+
+.pg-about__media {
+    position: relative;
+    isolation: isolate;
+}
+
+/* faint honeycomb drawn behind the cluster, faded out at its edges */
+.pg-about__grid {
+    position: absolute;
+    inset: -14% -10% -10% -16%;
+    z-index: 0;
+    width: auto;
+    height: auto;
+    color: var(--ink);
+    opacity: .16;
+    pointer-events: none;
+    -webkit-mask-image: radial-gradient(72% 70% at 42% 46%, #000 38%, transparent 76%);
+            mask-image: radial-gradient(72% 70% at 42% 46%, #000 38%, transparent 76%);
+}
+
+.pg-about__hexes {
+    position: relative;
+    z-index: 1;
+    aspect-ratio: 1 / 1;
+}
+
+/* pointy-top hexagon; a white pad under the clip reads as a frame */
+.hx {
+    --hex: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    position: absolute;
+    aspect-ratio: 1 / 1.1547;
+    padding: 7px;
+    background: var(--surface);
+    clip-path: var(--hex);
+    /* drop-shadow (not box-shadow) follows the clipped outline */
+    filter: drop-shadow(0 22px 34px rgba(15, 59, 70, .18));
+}
+
+.hx img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    clip-path: var(--hex);
+}
+
+.hx--lead {
+    width: 60%;
+    top: 1%;
+    right: 3%;
+    z-index: 1;
+}
+
+.hx--sub {
+    width: 43%;
+    left: 1%;
+    bottom: 7%;
+    z-index: 2;
+}
+
+.hx--doc {
+    width: 35%;
+    right: 1%;
+    bottom: 0;
+    z-index: 3;
+}
+
+.hx__play {
+    position: absolute;
+    z-index: 4;
+    top: 25%;
+    left: 1%;
+    display: grid;
+    place-items: center;
+    width: clamp(48px, 6.2vw, 74px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--action);
+    font-size: clamp(.9rem, 1.4vw, 1.2rem);
+    box-shadow: var(--sh-lg);
+    transition: transform .3s var(--ease), color .3s var(--ease);
+}
+
+/* soft pulse ring */
+.hx__play::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--action);
+    opacity: .5;
+    animation: hxPulse 2.6s var(--ease) infinite;
+}
+
+.hx__play:hover {
+    transform: scale(1.06);
+    color: var(--action-hover);
+}
+
+@keyframes hxPulse {
+    0%   { transform: scale(1);   opacity: .55; }
+    70%  { transform: scale(1.5); opacity: 0; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hx__play::before { animation: none; }
+}
+
+.pg-about__copy {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+}
+
+.pg-about__copy h2 {
+    font-family: var(--font-head);
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    line-height: 1.16;
+    color: var(--ink);
+}
+
+/* the trailing phrase, ghosted like the reference */
+.pg-about__faint {
+    color: var(--ink);
+    opacity: .22;
+}
+
+.pg-about__ecg {
+    width: clamp(92px, 9vw, 120px);
+    height: 26px;
+    margin: 2px 0 6px;
+    color: var(--action);
+}
+
+.pg-about__copy p {
+    color: var(--ink-soft);
+}
+
+.pg-about__foot {
+    display: flex;
+    align-items: center;
+    gap: clamp(16px, 3vw, 36px);
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.pg-about__sign {
+    width: clamp(120px, 14vw, 168px);
+    height: 54px;
+    color: var(--ocean-deep);
+    flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------

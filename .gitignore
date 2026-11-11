@@ -11,3 +11,24 @@ website.original.html
 .DS_Store
 Thumbs.db
 *.swp
+
+# Environment — never commit real secrets (.env.example is the template)
+.env
+
+# Composer dependencies — reinstall with `composer install`
+/vendor/
+
+# Runtime SQLite database — rebuild with `php vayu migrate && php vayu seed`.
+# Keeping the binary out avoids committing seeded admin password hashes and
+# any real submissions captured during local use.
+/database/database.sqlite
+
+# Local pre-rebuild backup of the ported design
+/.design-port-backup/
+
+# Runtime storage — keep the folders (.gitkeep), ignore their contents
+/storage/cache/*
+/storage/logs/*
+/storage/uploads/*
+/storage/cv/*
+!/storage/**/.gitkeep

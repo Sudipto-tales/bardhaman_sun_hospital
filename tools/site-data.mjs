@@ -87,7 +87,7 @@ export const DEPARTMENTS = [
         ],
         checks: ['24/7 interventional cover', 'On-site cardiac ICU', 'Bedside echo and Doppler', 'Structured cardiac rehab', 'Pacemaker & device clinic', 'Insurance desk on the floor'],
         introImg: IMG.ward(1000),
-        badge: { icon: 'fa-truck-medical', title: 'Chest pain?', text: 'Call +91 342 325 4567 — do not drive yourself.' },
+        badge: { icon: 'fa-truck-medical', title: 'Chest pain?', text: 'Call +91 90460 05557 — do not drive yourself.' },
         procedures: [
             { icon: 'fa-heart-circle-bolt', title: 'Primary Angioplasty', text: 'Emergency stenting for a heart attack in progress, available every hour of the year.' },
             { icon: 'fa-diagram-project', title: 'Coronary Angiography', text: 'Radial-access diagnostic imaging with same-day discharge for most patients.' },
@@ -474,8 +474,8 @@ export const DEPARTMENTS = [
 ];
 
 /* ---------------------------------------------------------
-   Blog. The first entry is the one blog-post.html renders in
-   full; the rest are cards on blog.html.
+   Blog. The first entry is the one the article page renders in
+   full; the rest are cards on the blog index.
    --------------------------------------------------------- */
 export const POSTS = [
     {
@@ -541,7 +541,7 @@ export const MILESTONES = [
     '2023 — Modular theatres rebuilt',
     '2024 — Digital records go live',
     '2025 — Fourth theatre added',
-    '2026 — 210 beds across 20 units',
+    '2026 — 204 beds across 20 units',
 ];
 
 /* The three pastel cards under the about-page banner strip. Order is
