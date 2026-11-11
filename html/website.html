@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Theme resolved before the stylesheet so the first paint is already
+         correct — a deferred script would flash the light page first.
+         Stored choice wins; with none, follow the OS. -->
+    <script>
+        (function () {
+            try {
+                var stored = localStorage.getItem('tsh-theme');
+                document.documentElement.dataset.theme = stored
+                    || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            } catch (e) { /* private mode — stay on the light default */ }
+
+            /* Language rides on the googtrans cookie because that is what the
+               Google Translate widget reads at init — see initLang() in
+               assets/website.js. Resolving it here rather than in that file
+               matters for one reason: Inter and Sora carry no Bengali glyphs,
+               so the font has to be requested before first paint or the
+               translated page renders in whatever the OS falls back to. */
+            if (/(^|;\s*)googtrans=[^;]*\/bn/.test(document.cookie)) {
+                var el = document.documentElement;
+                el.lang = 'bn';
+                el.dataset.lang = 'bn';
+
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap';
+                document.head.appendChild(link);
+            }
+        })();
+    </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sun Hospital &mdash; Compassionate Care, Every Day</title>
+    <meta name="description"
+        content="The Sun Hospital — multi-speciality care, expert doctors, 24/7 emergency services and advanced lab facilities.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="assets/logo-tsh.png">
+    <link rel="stylesheet" href="assets/website.css">
+</head>
+
+<body class="is-home">
+
+    <!-- ============ BRAND RAIL (fixed — never scrolls away) ============ -->
+    <!-- translate="no" throughout the brand and contact chrome: the Google
+         widget would otherwise transliterate the wordmark and, worse, rewrite
+         the digits of the emergency number into Bengali numerals.
+         On the home page (body.is-home) this renders as an inline icon +
+         wordmark that is white over the hero and darkens once scrolled. -->
+    <div class="brand-rail" id="brandRail" translate="no">
+        <a href="#hero" class="brand-rail__link">
+            <!-- logo-tsh.png: the TSH heart/hand/sun mark with its white background knocked out -->
+            <img src="assets/logo-tsh.png" alt="" class="brand-rail__icon" aria-hidden="true">
+            <span class="brand-rail__word">The&nbsp;Sun<span>Hospital</span></span>
+        </a>
+    </div>
+
+    <!-- ============ NAV (separate element — hides on scroll-down) ============ -->
+    <div class="nav-shell" id="navShell">
+        <div class="nav-topbar" translate="no">
+            <span><i class="fa-solid fa-envelope"></i> contact@thesunhospital.in</span>
+            <span><i class="fa-solid fa-phone"></i> +91 342 325 4567</span>
+        </div>
+
+        <nav class="nav-bar" aria-label="Primary">
+            <a href="#hero" class="nav-link is-active">Home</a>
+            <a href="about.html" class="nav-link">About Us</a>
+
+            <div class="nav-drop">
+                <a href="departments.html" class="nav-link">Departments <i class="fa-solid fa-chevron-down"></i></a>
+                <div class="nav-mega">
+                    <a href="departments.html" class="nav-mega-item">All Departments <span>Overview &amp; Directory</span></a>
+                    <a href="cardiology.html" class="nav-mega-item">Cardiology <span>6+ Doctors Available</span></a>
+                    <a href="neuro-surgery.html" class="nav-mega-item">Neuro Surgery <span>2+ Doctors Available</span></a>
+                    <a href="nephrology.html" class="nav-mega-item">Medicine &amp; Nephrology <span>2+ Doctors
+                            Available</span></a>
+                    <a href="orthopedics.html" class="nav-mega-item">Orthopedic Surgery <span>2+ Doctors
+                            Available</span></a>
+                    <a href="dental-care.html" class="nav-mega-item">Dental Care <span>1+ Doctors Available</span></a>
+                    <a href="prenatal-care.html" class="nav-mega-item">Prenatal Care <span>1+ Doctors Available</span></a>
+                    <a href="nutrition.html" class="nav-mega-item">Food &amp; Nutrition <span>1+ Doctors Available</span></a>
+                    <a href="ophthalmology.html" class="nav-mega-item">Ophthalmology <span>2+ Doctors Available</span></a>
+                    <a href="general-surgery.html" class="nav-mega-item">General Surgery <span>1+ Doctors Available</span></a>
+                    <a href="lab-diagnostics.html" class="nav-mega-item">Lab Diagnostics <span>Same-day Reports</span></a>
+                    <a href="pediatric-surgery.html" class="nav-mega-item">Pediatric Surgery <span>2+ Doctors Available</span></a>
+                </div>
+            </div>
+
+            <div class="nav-drop">
+                <a href="gallery.html" class="nav-link">Pages <i class="fa-solid fa-chevron-down"></i></a>
+                <div class="nav-mega nav-mega--pages">
+                    <a href="gallery.html" class="nav-mega-item">Gallery <span>Photos &amp; moments</span></a>
+                    <a href="facilities.html" class="nav-mega-item">Facilities <span>Wards, theatres &amp; ICU</span></a>
+                    <a href="blog.html" class="nav-mega-item">Blogs <span>News &amp; health tips</span></a>
+                    <a href="departments.html" class="nav-mega-item">Departments <span>Overview &amp; directory</span></a>
+                </div>
+            </div>
+
+            <a href="careers.html" class="nav-link">Careers</a>
+            <a href="doctors.html" class="nav-link">Doctors</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+
+            <button type="button" class="nav-search-toggle" id="navSearchBtn" aria-label="Search the site"
+                aria-expanded="false" aria-controls="navSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+            <!-- borrows .nav-search-toggle so it picks up the same shape and
+                 the same over-hero / is-compact colour states -->
+            <button type="button" class="nav-search-toggle nav-theme-toggle" id="themeBtn" aria-pressed="false"
+                aria-label="Switch to dark theme"><i class="fa-solid fa-moon"></i><i
+                    class="fa-solid fa-sun"></i></button>
+
+            <!-- sits here rather than in .nav-topbar because that bar is
+                 display:none below 640px; the nav pill survives every width -->
+            <div class="nav-lang" id="navLang" role="group" aria-label="Language" translate="no">
+                <button type="button" data-lang="en" aria-pressed="true">EN</button>
+                <button type="button" data-lang="bn" aria-pressed="false" lang="bn">বাং</button>
+            </div>
+
+            <a href="contact.html#emergency" class="nav-emergency"><i class="fa-solid fa-truck-medical"></i> Emergency</a>
+
+            <!-- takes over the whole bar while open; see .nav-bar.is-searching -->
+            <div class="nav-search" id="navSearch" role="search">
+                <i class="fa-solid fa-magnifying-glass nav-search__icon"></i>
+                <input type="text" id="navSearchInput" class="nav-search__input" autocomplete="off" spellcheck="false"
+                    placeholder="Search everything — doctors, departments, tests, FAQs…" aria-label="Search the site"
+                    aria-autocomplete="list" aria-controls="navSearchResults">
+                <button type="button" class="nav-search__close" id="navSearchClose" aria-label="Close search"><i
+                        class="fa-solid fa-xmark"></i></button>
+                <div class="nav-search__panel" id="navSearchResults" role="listbox" aria-label="Search results"></div>
+            </div>
+
+            <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-controls="mobileMenu"><span></span></button>
+        </nav>
+    </div>
+
+    <!-- mobile overlay menu (the old build simply hid the nav below 1024px) -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#hero">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="departments.html">Departments</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="facilities.html">Facilities</a>
+        <a href="blog.html">Blogs</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="careers.html">Careers</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <!-- ============ FLOATING GLASS DOCK (left) ============ -->
+    <aside class="dock" aria-label="Quick actions">
+        <div class="dock__inner" id="dock">
+            <a href="doctors.html" class="dock__btn" aria-label="Find a Doctor">
+                <i class="fa-solid fa-stethoscope"></i>
+                <span class="dock__tip">Find a Doctor</span>
+            </a>
+            <a href="contact.html#map" class="dock__btn" aria-label="Our Location">
+                <i class="fa-solid fa-truck-medical"></i>
+                <span class="dock__tip">Our Location</span>
+            </a>
+            <a href="tel:+913423254567" class="dock__btn" aria-label="Connect With Us">
+                <i class="fa-solid fa-phone"></i>
+                <span class="dock__tip">Connect With Us</span>
+            </a>
+            <a href="https://wa.me/913423254567" class="dock__btn dock__btn--wa" aria-label="WhatsApp" target="_blank"
+                rel="noopener">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span class="dock__tip">WhatsApp</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- ============ SCROLL-SPY RAIL (right, populated from [data-section]) ============ -->
+    <nav class="spy" id="spy" aria-label="Section navigation"></nav>
+
+    <!-- ============ HERO ============ -->
+    <!-- One rounded "card" holding a full-bleed patient photo, a dark left scrim,
+         a big two-line headline with a pill CTA, a floating glass review chip, a
+         column of speciality pills and a thin footer strip — the "clinic landing"
+         card composition. A giant faint wordmark sits behind the card. -->
+    <section class="hero" id="hero" data-section="Home">
+        <span class="hero__watermark" aria-hidden="true" translate="no">CARE</span>
+
+        <div class="hero__card">
+            <div class="hero__media" aria-hidden="true">
+                <!-- autoplay bg video; poster paints instantly and is the
+                     fallback if the video is blocked or still buffering -->
+                <video class="hero__photo" autoplay muted loop playsinline preload="auto"
+                    poster="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?q=80&w=1600&auto=format&fit=crop">
+                    <source src="https://videos.pexels.com/video-files/3191572/3191572-hd_1920_1080_25fps.mp4"
+                        type="video/mp4">
+                </video>
+            </div>
+            <div class="hero__scrim" aria-hidden="true"></div>
+
+            <div class="hero__content">
+                <div class="hero__lead">
+                    <span class="hero__eyebrow"><span class="hero__eyebrow-dot"></span> The Sun Hospital ·
+                        Bardhaman</span>
+                    <h1 class="hero__title">Compassionate&nbsp;Care<br>Every Single Day</h1>
+                    <p class="hero__text">Multi-speciality treatment, expert doctors and round-the-clock
+                        emergency care — modern medicine delivered with genuine warmth, all under one roof.</p>
+
+                    <div class="hero__actions">
+                        <a href="contact.html#book" class="hero__cta">
+                            Book an Appointment
+                            <span class="hero__cta-ico"><i class="fa-solid fa-arrow-right"></i></span>
+                        </a>
+                    </div>
+
+                    <!-- floating glass review chip -->
+                    <a href="#testimonials" class="hero__review">
+                        <span class="hero__review-thumb">
+                            <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=240&auto=format&fit=crop"
+                                alt="" loading="lazy">
+                        </span>
+                        <span class="hero__review-body">
+                            <span class="hero__review-text">Trusted multi-speciality care, close to home.</span>
+                            <span class="hero__review-foot">
+                                <i class="fa-solid fa-star"></i> 4.9 <span>Rating</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square hero__review-go"></i>
+                            </span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- speciality pills, lower-right -->
+            <div class="hero__pills" aria-hidden="true">
+                <span class="hero__pill is-active">24/7 Emergency</span>
+                <span class="hero__pill">Cardiology</span>
+                <span class="hero__pill">Neurology</span>
+                <span class="hero__pill">Orthopedics</span>
+                <span class="hero__pill">Diagnostics</span>
+            </div>
+
+            <!-- thin footer strip inside the card -->
+            <div class="hero__strip" aria-hidden="true">
+                <span class="hero__strip-cell">Your Health, Our Science</span>
+                <span class="hero__strip-cell hero__strip-mid">
+                    <span class="hero__strip-count"><strong>24</strong> / 7 care</span>
+                </span>
+                <span class="hero__strip-cell hero__strip-end">Scroll for More <i
+                        class="fa-solid fa-arrow-down"></i></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="about" id="about" data-section="About" data-floaters="3">
+        <div class="about__content">
+            <span class="eyebrow">About The Sun</span>
+            <h2 class="about__title" data-reveal-copy>We deliver personalised patient
+                care with <em>compassion</em> and advanced technology.</h2>
+            <p class="about__desc" data-reveal-copy>Embrace a world of comprehensive healthcare where your well-being takes centre
+                stage. We're dedicated to providing personalised, compassionate medical services — the shortest
+                possible distance between a patient and the right specialist.</p>
+
+            <ul class="about__features">
+                <li><i class="fa-solid fa-check"></i> 24/7 Emergency &amp; Trauma Care</li>
+                <li><i class="fa-solid fa-check"></i> Advanced Diagnostic Labs</li>
+                <li><i class="fa-solid fa-check"></i> 50+ Visiting Specialists</li>
+                <li><i class="fa-solid fa-check"></i> Transparent, Fair Pricing</li>
+            </ul>
+
+            <div class="about__cta-row">
+                <a href="about.html" class="hero__cta">
+                    Read Our Story
+                    <span class="hero__cta-ico"><i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+                <div class="about__trust">
+                    <div class="about__avatars">
+                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=120&auto=format&fit=crop" alt="" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1594824436998-d40d9b4b0870?q=80&w=120&auto=format&fit=crop" alt="" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=120&auto=format&fit=crop" alt="" loading="lazy">
+                    </div>
+                    <p>Trusted by Thousands<br>of Happy Patients</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="about__visuals">
+            <div class="about__frame">
+                <div class="img-stretch about__media">
+                    <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=1000&auto=format&fit=crop"
+                        alt="Surgical team at The Sun Hospital" class="about__img" loading="lazy">
+                </div>
+                <a href="#care" class="about__play" aria-label="Watch our care in action">
+                    <i class="fa-solid fa-play"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ STATS STRIP ============ -->
+    <section class="stats" aria-label="Our track record">
+        <div class="stats__row">
+            <div class="stats__item">
+                <span class="stats__ico"><i class="fa-solid fa-face-smile"></i></span>
+                <div>
+                    <h3>98%</h3>
+                    <p>Patient Satisfaction</p>
+                </div>
+            </div>
+            <div class="stats__item">
+                <span class="stats__ico"><i class="fa-solid fa-hand-holding-medical"></i></span>
+                <div>
+                    <h3>15K+</h3>
+                    <p>Patients Treated</p>
+                </div>
+            </div>
+            <div class="stats__item">
+                <span class="stats__ico"><i class="fa-solid fa-star"></i></span>
+                <div>
+                    <h3>4.9/5</h3>
+                    <p>Average Rating</p>
+                </div>
+            </div>
+            <div class="stats__item">
+                <span class="stats__ico"><i class="fa-solid fa-calendar-check"></i></span>
+                <div>
+                    <h3>20+</h3>
+                    <p>Years of Service</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ SPECIALITIES ============ -->
+    <section class="spec" id="specialities" data-section="Specialities" data-floaters="4">
+        <div class="spec__header">
+            <div>
+                <span class="eyebrow">Centres of Excellence</span>
+                <h2>Discover Our Top<br><strong>Specialities</strong></h2>
+            </div>
+            <p>Experience world-class healthcare at our specialised centres of medical excellence, where innovation
+                and expert care set new standards in clinical outcomes.</p>
+        </div>
+
+        <div class="spec__console">
+            <div class="spec__index" data-lenis-prevent>
+                <ul class="spec__list" id="specialtyList" role="tablist" aria-label="Specialities">
+                    <span class="spec__hl" aria-hidden="true"></span>
+                    <li class="is-active" data-target="cardiac" role="tab" tabindex="0" aria-selected="true">
+                        <i class="fa-solid fa-heart-pulse"></i> Cardiac Sciences
+                        <i class="fa-solid fa-arrow-right-long arrow"></i>
+                    </li>
+                    <li data-target="oncology" role="tab" tabindex="-1" aria-selected="false">
+                        <i class="fa-solid fa-dna"></i> Oncology
+                        <i class="fa-solid fa-arrow-right-long arrow"></i>
+                    </li>
+                    <li data-target="neurology" role="tab" tabindex="-1" aria-selected="false">
+                        <i class="fa-solid fa-brain"></i> Neurology
+                        <i class="fa-solid fa-arrow-right-long arrow"></i>
+                    </li>
+                    <li data-target="nephrology" role="tab" tabindex="-1" aria-selected="false">
+                        <i class="fa-solid fa-droplet"></i> Nephrology
+                        <i class="fa-solid fa-arrow-right-long arrow"></i>
+                    </li>
+                    <li data-target="gastro" role="tab" tabindex="-1" aria-selected="false">
+                        <i class="fa-solid fa-notes-medical"></i> Gastroenterology &amp; Hepatology
+                        <i class="fa-solid fa-arrow-right-long arrow"></i>
+                    </li>
+                    <li data-target="gynaecology" role="tab" tabindex="-1" aria-selected="false">
+                        <i class="fa-solid fa-person-pregnant"></i> Gynaecology
+                        <i class="fa-solid fa-arrow-right-long arrow"></i>
+                    </li>
+                    <li data-target="pulmonology" role="tab" tabindex="-1" aria-selected="false">
+                        <i class="fa-solid fa-lungs"></i> Pulmonology
+                        <i class="fa-solid fa-arrow-right-long arrow"></i>
+                    </li>
+                    <li data-target="orthopaedics" role="tab" tabindex="-1" aria-selected="false">
+                        <i class="fa-solid fa-bone"></i> Orthopaedics
+                        <i class="fa-solid fa-arrow-right-long arrow"></i>
+                    </li>
+                    <li data-target="urology" role="tab" tabindex="-1" aria-selected="false">
+                        <i class="fa-solid fa-stethoscope"></i> Urology
+                        <i class="fa-solid fa-arrow-right-long arrow"></i>
+                    </li>
+                    <li data-target="paediatrics" role="tab" tabindex="-1" aria-selected="false">
+                        <i class="fa-solid fa-baby"></i> Paediatrics &amp; Neonatology
+                        <i class="fa-solid fa-arrow-right-long arrow"></i>
+                    </li>
+                    <li data-target="ent" role="tab" tabindex="-1" aria-selected="false">
+                        <i class="fa-solid fa-ear-listen"></i> ENT &amp; Head-Neck Surgery
+                        <i class="fa-solid fa-arrow-right-long arrow"></i>
+                    </li>
+                    <li data-target="dermatology" role="tab" tabindex="-1" aria-selected="false">
+                        <i class="fa-solid fa-hand-dots"></i> Dermatology
+                        <i class="fa-solid fa-arrow-right-long arrow"></i>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="spec__stage">
+                <div class="spec__card">
+                    <img id="featImage"
+                        src="https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?q=80&w=800&auto=format&fit=crop"
+                        alt="Cardiac Sciences" class="spec__stage-img" loading="lazy">
+                    <div class="spec__stage-scrim" aria-hidden="true"></div>
+                    <div class="spec__panel">
+                        <h3 id="featTitle">Cardiac Sciences</h3>
+                        <p id="featDesc"></p>
+                        <span class="spec__proc-label">Our Procedures</span>
+                        <div class="spec__proc-tags" id="featProcedures"></div>
+                        <a href="doctors.html" class="spec__btn" id="featBtn">
+                            Meet Our Cardiac Sciences Experts <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="spec__conditions">
+                    <span class="spec__cond-title"><i class="fa-solid fa-notes-medical"></i> Conditions We Treat</span>
+                    <ul class="spec__cond-list" id="conditionsList" aria-label="Conditions we treat"></ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ SERVICES REVEAL (sticky video) ============ -->
+    <div class="reveal-wrap" id="care" data-section="Care">
+        <div class="reveal__video">
+            <div class="reveal__overlay"></div>
+            <!-- Swap this source for your own hospital footage when you have it.
+                 If it fails to load, the poster and the section background show instead. -->
+            <video autoplay muted loop playsinline class="reveal__vid"
+                poster="https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=1600&auto=format&fit=crop">
+                <source src="https://videos.pexels.com/video-files/3195394/3195394-hd_1920_1080_25fps.mp4"
+                    type="video/mp4">
+            </video>
+        </div>
+
+        <section class="reveal__content" data-floaters="4" data-floaters-dark>
+            <div class="section-head section-head--center">
+                <span class="eyebrow eyebrow--onDark">Our Services</span>
+                <h2>We Serve in Different <strong>Areas for<br>Our Patients</strong></h2>
+            </div>
+
+            <div class="reveal__strip" data-lenis-prevent>
+                <div class="reveal__card">
+                    <span class="reveal__card-num">01</span>
+                    <i class="fa-solid fa-leaf reveal__card-icon"></i>
+                    <h4>Food &amp; Nutrition</h4>
+                    <p>20+ doctors are available under this department.</p>
+                    <a href="nutrition.html" class="reveal__more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="reveal__card">
+                    <span class="reveal__card-num">02</span>
+                    <i class="fa-regular fa-eye reveal__card-icon"></i>
+                    <h4>Ophthalmology</h4>
+                    <p>20+ doctors are available under this department.</p>
+                    <a href="ophthalmology.html" class="reveal__more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="reveal__card">
+                    <span class="reveal__card-num">03</span>
+                    <i class="fa-solid fa-tooth reveal__card-icon"></i>
+                    <h4>Dental Care</h4>
+                    <p>20+ doctors are available under this department.</p>
+                    <a href="dental-care.html" class="reveal__more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="reveal__card">
+                    <span class="reveal__card-num">04</span>
+                    <i class="fa-solid fa-syringe reveal__card-icon"></i>
+                    <h4>Surgery</h4>
+                    <p>25+ doctors are available under this department.</p>
+                    <a href="general-surgery.html" class="reveal__more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="reveal__card">
+                    <span class="reveal__card-num">05</span>
+                    <i class="fa-solid fa-bone reveal__card-icon"></i>
+                    <h4>Orthopedic</h4>
+                    <p>20+ doctors are available under this department.</p>
+                    <a href="orthopedics.html" class="reveal__more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="reveal__card">
+                    <span class="reveal__card-num">06</span>
+                    <i class="fa-solid fa-dna reveal__card-icon"></i>
+                    <h4>Neurology</h4>
+                    <p>20+ doctors are available under this department.</p>
+                    <a href="neuro-surgery.html" class="reveal__more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="reveal__card">
+                    <span class="reveal__card-num">07</span>
+                    <i class="fa-solid fa-heart-pulse reveal__card-icon"></i>
+                    <h4>Cardiology</h4>
+                    <p>20+ doctors are available under this department.</p>
+                    <a href="cardiology.html" class="reveal__more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="reveal__card">
+                    <span class="reveal__card-num">08</span>
+                    <i class="fa-solid fa-pills reveal__card-icon"></i>
+                    <h4>Medicine &amp; Nephrology</h4>
+                    <p>20+ doctors are available under this department.</p>
+                    <a href="nephrology.html" class="reveal__more">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="reveal__foot">
+                <p>We have 8+ more care services including our Emergency Department.</p>
+                <a href="departments.html" class="reveal__foot-btn">View All Services <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </section>
+    </div>
+
+    <!-- ============ TRACK RECORD ============ -->
+    <section class="track" id="testimonials" data-section="Testimonials" data-floaters="3">
+        <div class="track__spring">
+            <svg width="60" height="60" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                <path d="M20 80 C 10 50, 90 50, 80 20" stroke="currentColor" stroke-width="8" stroke-linecap="round"
+                    stroke-dasharray="10 15" />
+                <path d="M30 90 C 20 60, 100 60, 90 30" stroke="currentColor" stroke-width="6" stroke-linecap="round"
+                    stroke-dasharray="8 12" opacity=".55" />
+            </svg>
+        </div>
+
+        <div class="track__header">
+            <span class="eyebrow">Your Health Is Our Top Priority</span>
+            <h2 data-reveal-copy>Our track record speaks for itself. Many individuals have chosen
+                <span class="track__faded">our medical centre and have had positive, transformative
+                    experiences.</span>
+            </h2>
+        </div>
+
+        <div class="track__stage">
+            <!-- two badge pills across the top -->
+            <div class="track__badges">
+                <div class="track__item track__rating">
+                    <span class="track__rating-label">AVERAGE GOOGLE RATING</span>
+                    <div class="track__rating-score">
+                        <i class="fa-solid fa-star"></i> <span id="tRatingNum">4.9</span>
+                    </div>
+                </div>
+
+                <div class="track__item track__award">
+                    <div class="track__award-icon">
+                        <i class="fa-solid fa-staff-snake"></i>
+                    </div>
+                    <div>
+                        <span class="track__award-label">NABH ACCREDITED</span>
+                        <h4>Award-winning quality care, independently verified</h4>
+                        <a href="#about" class="arrow-link"><i class="fa-solid fa-arrow-right"></i> Learn More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- centre spotlight: the auto-advancing quote, swapped by initTestimonials() -->
+            <div class="track__item track__quote" id="testimonialCard" aria-live="polite">
+                <i class="fa-solid fa-quote-left track__quote-mark"></i>
+                <p class="track__quote-text" id="tQuote">"I had a great experience at this hospital. I was seen
+                    quickly, and the doctor was able to diagnose and treat my condition very patiently."</p>
+
+                <div class="track__quote-foot">
+                    <div class="track__author">
+                        <img id="tAvatar"
+                            src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=150&auto=format&fit=crop"
+                            alt="Jane Ronan" loading="lazy">
+                        <div>
+                            <h4 id="tName">JANE RONAN</h4>
+                            <span id="tRole">Cardio Patient</span>
+                        </div>
+                    </div>
+                    <div class="track__nav">
+                        <div class="track__dots" id="tDots" role="tablist" aria-label="Choose testimonial"></div>
+                        <button class="track__nav-btn" id="tPrev" aria-label="Previous testimonial"><i
+                                class="fa-solid fa-arrow-left"></i></button>
+                        <button class="track__nav-btn" id="tNext" aria-label="Next testimonial"><i
+                                class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- supporting images, a two-up strip beneath the spotlight -->
+            <div class="track__moments">
+                <div class="track__item track__img img-stretch">
+                    <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=800&auto=format&fit=crop"
+                        alt="Doctor consulting a patient" loading="lazy">
+                </div>
+                <div class="track__item track__img img-stretch">
+                    <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=800&auto=format&fit=crop"
+                        alt="Surgical team operating" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ WHY CHOOSE ============ -->
+    <section class="why" id="why" data-section="Why Us" data-floaters="3">
+        <div class="why__header section-head">
+            <span class="eyebrow">Why Choose The Sun</span>
+            <h2>We Are Different To <strong>Protect<br>Your Health</strong></h2>
+        </div>
+
+        <div class="why__rows">
+            <article class="why__row">
+                <span class="why__num" aria-hidden="true">01</span>
+                <div class="why__media">
+                    <div class="why__star">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=300&auto=format&fit=crop"
+                            alt="Doctor portrait" loading="lazy">
+                    </div>
+                </div>
+                <div class="why__body">
+                    <h3>Not Just Better Care, But a Better Experience</h3>
+                    <p>We believe in providing not just better care but a better experience overall. We understand that
+                        your journey to health matters as much as the destination.</p>
+                    <a href="#about" class="arrow-link"><i class="fa-solid fa-arrow-right"></i> Learn More</a>
+                </div>
+            </article>
+
+            <article class="why__row">
+                <span class="why__num" aria-hidden="true">02</span>
+                <div class="why__media">
+                    <div class="why__star">
+                        <img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?q=80&w=300&auto=format&fit=crop"
+                            alt="Medical team" loading="lazy">
+                    </div>
+                </div>
+                <div class="why__body">
+                    <h3>Serving All People Through Exemplary Care</h3>
+                    <p>Every patient is treated with the same standard of clinical rigour and human warmth, regardless of
+                        where they have come from.</p>
+                    <a href="#about" class="arrow-link"><i class="fa-solid fa-arrow-right"></i> Learn More</a>
+                </div>
+            </article>
+
+            <article class="why__row">
+                <span class="why__num" aria-hidden="true">03</span>
+                <div class="why__media">
+                    <div class="why__star">
+                        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=300&auto=format&fit=crop"
+                            alt="Doctor examining a patient" loading="lazy">
+                    </div>
+                </div>
+                <div class="why__body">
+                    <h3>Specialty Medicine with Compassion and Care</h3>
+                    <p>Sub-speciality expertise backed by multidisciplinary review, so complex cases get more than one
+                        expert opinion by default.</p>
+                    <a href="#about" class="arrow-link"><i class="fa-solid fa-arrow-right"></i> Learn More</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ============ LAB FACILITIES ============ -->
+    <section class="lab" id="lab" data-section="Lab Tests" data-floaters="3">
+        <div class="lab__top">
+            <div class="lab__intro">
+                <span class="eyebrow">Lab Test</span>
+                <h2>We Have Lab Test Facilities<br><strong>Book Yours Today</strong></h2>
+            </div>
+
+            <div class="lab__visual">
+                <div class="lab__img-wrap img-stretch">
+                    <img src="https://images.unsplash.com/photo-1579154204601-01588f351e67?q=80&w=1000&auto=format&fit=crop"
+                        alt="Lab technician at work" class="lab__img" loading="lazy">
+                </div>
+
+                <div class="lab__pill">
+                    <div class="lab__pill-icon">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div class="lab__pill-text">
+                        <h4>PRECISION PROFICIENCY AWARD</h4>
+                        <p>Awarded to our lab for consistently achieving unparalleled precision in test results.</p>
+                    </div>
+                    <button class="lab__pill-btn" aria-label="Read more"><i
+                            class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="lab__rail">
+            <div class="lab__viewport">
+                <div class="lab__track" id="labSlider">
+                        <div class="lab__card">
+                            <span class="lab__badge">30% Off</span>
+                            <div class="lab__card-icon" style="color:var(--crimson)"><i
+                                    class="fa-solid fa-bone"></i></div>
+                            <h3>Orthopedic Test</h3>
+                            <p>We do all kinds of MRI &amp; CT scans for our patients.</p>
+                            <div class="lab__price">STARTING FROM <strong>&#8377;2,400</strong></div>
+                            <a href="contact.html#book" class="lab__btn"><i class="fa-solid fa-arrow-right"></i> Schedule a
+                                Test</a>
+                        </div>
+
+                        <div class="lab__card">
+                            <span class="lab__badge">30% Off</span>
+                            <div class="lab__card-icon" style="color:var(--magenta)"><i
+                                    class="fa-solid fa-magnet"></i></div>
+                            <h3>Ultrasound</h3>
+                            <p>Full abdominal, obstetric and doppler ultrasound studies.</p>
+                            <div class="lab__price">STARTING FROM <strong>&#8377;1,200</strong></div>
+                            <a href="contact.html#book" class="lab__btn"><i class="fa-solid fa-arrow-right"></i> Schedule a
+                                Test</a>
+                        </div>
+
+                        <div class="lab__card">
+                            <span class="lab__badge">20% Off</span>
+                            <div class="lab__card-icon" style="color:var(--blue)"><i
+                                    class="fa-solid fa-flask"></i></div>
+                            <h3>Blood Analysis</h3>
+                            <p>Complete haematology and biochemistry panels, same day.</p>
+                            <div class="lab__price">STARTING FROM <strong>&#8377;650</strong></div>
+                            <a href="contact.html#book" class="lab__btn"><i class="fa-solid fa-arrow-right"></i> Schedule a
+                                Test</a>
+                        </div>
+
+                        <div class="lab__card">
+                            <span class="lab__badge">15% Off</span>
+                            <div class="lab__card-icon" style="color:var(--navy)"><i
+                                    class="fa-solid fa-brain"></i></div>
+                            <h3>Neurology Scan</h3>
+                            <p>EEG, NCV and contrast MRI brain studies with reporting.</p>
+                            <div class="lab__price">STARTING FROM <strong>&#8377;3,600</strong></div>
+                            <a href="contact.html#book" class="lab__btn"><i class="fa-solid fa-arrow-right"></i> Schedule a
+                                Test</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lab__progress">
+                    <div class="lab__progress-bar" id="labProgressBar"></div>
+                </div>
+            </div>
+    </section>
+
+    <!-- ============ DOCTORS ============ -->
+    <section class="doc" id="doctors" data-section="Doctors" data-floaters="3">
+        <div class="doc__header section-head">
+            <span class="eyebrow">Doctors</span>
+            <h2>Our Expert Doctors <strong>For<br>The Patients</strong></h2>
+        </div>
+
+        <div class="doc__tabs">
+            <button class="doc__tab is-active" data-filter="all">ALL</button>
+            <button class="doc__tab" data-filter="cardiologist">CARDIOLOGIST</button>
+            <button class="doc__tab" data-filter="orthopedist">ORTHOPEDIST</button>
+            <button class="doc__tab" data-filter="nutritionist">NUTRITIONIST</button>
+            <button class="doc__tab" data-filter="gynocologist">GYNOCOLOGIST</button>
+        </div>
+
+        <div class="doc__carousel">
+            <button class="doc__nav" id="docPrev" aria-label="Previous doctors"><i
+                    class="fa-solid fa-arrow-left"></i></button>
+
+            <div class="doc__viewport">
+                <div class="doc__track" id="docTrack">
+                    <div class="doc__card" data-specialty="orthopedist">
+                        <div class="doc__card-img">
+                            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=400&auto=format&fit=crop"
+                                alt="Dr. Victor James" loading="lazy">
+                            <a href="contact.html?doctor=dr-victor-james#book" class="doc__book">
+                                <span class="doc__book-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                                Book an Appointment
+                            </a>
+                        </div>
+                        <div class="doc__card-info">
+                            <h4>Dr. Victor James</h4>
+                            <p>Head of Orthopedics Department</p>
+                        </div>
+                    </div>
+
+                    <div class="doc__card" data-specialty="gynocologist">
+                        <div class="doc__card-img">
+                            <img src="https://images.unsplash.com/photo-1537368910025-702800faa86b?q=80&w=400&auto=format&fit=crop"
+                                alt="Dr. Philips Rownd" loading="lazy">
+                            <a href="contact.html?doctor=dr-philips-rownd#book" class="doc__book">
+                                <span class="doc__book-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                                Book an Appointment
+                            </a>
+                        </div>
+                        <div class="doc__card-info">
+                            <h4>Dr. Philips Rownd</h4>
+                            <p>Gynocologist</p>
+                        </div>
+                    </div>
+
+                    <div class="doc__card" data-specialty="cardiologist">
+                        <div class="doc__card-img">
+                            <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=400&auto=format&fit=crop"
+                                alt="Dr. Jonathon Ronan" loading="lazy">
+                            <a href="contact.html?doctor=dr-jonathon-ronan#book" class="doc__book">
+                                <span class="doc__book-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                                Book an Appointment
+                            </a>
+                        </div>
+                        <div class="doc__card-info">
+                            <h4>Dr. Jonathon Ronan</h4>
+                            <p>Head of Cardiology Department</p>
+                        </div>
+                    </div>
+
+                    <div class="doc__card" data-specialty="nutritionist">
+                        <div class="doc__card-img">
+                            <img src="https://images.unsplash.com/photo-1594824436998-d40d9b4b0870?q=80&w=400&auto=format&fit=crop"
+                                alt="Dr. Jane Ronan" loading="lazy">
+                            <a href="contact.html?doctor=dr-jane-ronan#book" class="doc__book">
+                                <span class="doc__book-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                                Book an Appointment
+                            </a>
+                        </div>
+                        <div class="doc__card-info">
+                            <h4>Dr. Jane Ronan</h4>
+                            <p>Pediatric Nutritionist</p>
+                        </div>
+                    </div>
+
+                    <div class="doc__card" data-specialty="cardiologist">
+                        <div class="doc__card-img">
+                            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=400&auto=format&fit=crop"
+                                alt="Dr. Anita Sharma" loading="lazy">
+                            <a href="contact.html?doctor=dr-anita-sharma#book" class="doc__book">
+                                <span class="doc__book-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                                Book an Appointment
+                            </a>
+                        </div>
+                        <div class="doc__card-info">
+                            <h4>Dr. Anita Sharma</h4>
+                            <p>Interventional Cardiologist</p>
+                        </div>
+                    </div>
+
+                    <div class="doc__card" data-specialty="orthopedist">
+                        <div class="doc__card-img">
+                            <img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?q=80&w=400&auto=format&fit=crop"
+                                alt="Dr. Rahul Dey" loading="lazy">
+                            <a href="contact.html?doctor=dr-rahul-dey#book" class="doc__book">
+                                <span class="doc__book-icon"><i class="fa-solid fa-arrow-right"></i></span>
+                                Book an Appointment
+                            </a>
+                        </div>
+                        <div class="doc__card-info">
+                            <h4>Dr. Rahul Dey</h4>
+                            <p>Joint Replacement Surgeon</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="doc__nav" id="docNext" aria-label="Next doctors"><i
+                    class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="faq" id="faq" data-section="FAQ" data-floaters="3">
+        <div class="faq__head section-head section-head--center">
+            <span class="eyebrow">FAQ</span>
+            <h2>We Are Here <strong>To Answer Your Questions</strong></h2>
+        </div>
+
+        <div class="faq__grid">
+            <div class="faq__aside img-stretch">
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=800&auto=format&fit=crop"
+                    alt="Medical team smiling" class="faq__img" loading="lazy">
+            </div>
+
+            <div class="faq__accordion">
+                    <div class="faq__item">
+                        <button class="faq__q" aria-expanded="false">
+                            How do I book an online appointment?
+                            <i class="fa-solid fa-plus faq__q-ic"></i>
+                        </button>
+                        <div class="faq__a">
+                            <p>Book through our online portal by choosing your preferred doctor and time slot, then
+                                confirming your details. You'll receive an SMS confirmation immediately.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq__item">
+                        <button class="faq__q" aria-expanded="false">
+                            How do I make a payment?
+                            <i class="fa-solid fa-plus faq__q-ic"></i>
+                        </button>
+                        <div class="faq__a">
+                            <p>We accept credit and debit cards, net banking and UPI for online consultations.
+                                In-person visits can also be settled by cash or through your insurer.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq__item">
+                        <button class="faq__q" aria-expanded="false">
+                            How do I book a cabin in the hospital?
+                            <i class="fa-solid fa-plus faq__q-ic"></i>
+                        </button>
+                        <div class="faq__a">
+                            <p>Cabin bookings can be requested during admission or pre-booked by contacting our
+                                inpatient services desk at +91 342 325 4567.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq__item">
+                        <button class="faq__q" aria-expanded="false">
+                            How much does my insurance cover?
+                            <i class="fa-solid fa-plus faq__q-ic"></i>
+                        </button>
+                        <div class="faq__a">
+                            <p>Coverage depends on your specific policy and provider. Share your policy details with
+                                our billing department for a full breakdown before admission.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq__item">
+                        <button class="faq__q" aria-expanded="false">
+                            What are the general visiting hours?
+                            <i class="fa-solid fa-plus faq__q-ic"></i>
+                        </button>
+                        <div class="faq__a">
+                            <p>General visiting hours are 4:00 PM to 7:00 PM daily. ICU visiting hours are strictly
+                                11:00 AM &ndash; 12:00 PM and 5:00 PM &ndash; 6:00 PM.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- ============ BLOG ============ -->
+    <section class="blog" id="blog" data-section="Articles" data-floaters="3">
+        <div class="blog__header section-head">
+            <span class="eyebrow">Blog &amp; Articles</span>
+            <h2>Read Top Articles From<br><strong>Expert Doctors</strong></h2>
+        </div>
+
+        <div class="blog__grid">
+            <article class="blog__card blog__card--feature">
+                <div class="blog__card-img img-stretch">
+                    <img src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?q=80&w=800&auto=format&fit=crop"
+                        alt="Expectant parents" loading="lazy">
+                    <span class="blog__cat">Maternity</span>
+                </div>
+                <div class="blog__body">
+                    <div class="blog__meta">
+                        <span>January 29, 2025</span> &ndash; <span>4 MINS READ</span>
+                    </div>
+                    <h3>How to prepare for your baby's arrival: a checklist for expectant parents</h3>
+                    <a href="blog-post.html" class="arrow-link"><i class="fa-solid fa-arrow-right"></i> Read More</a>
+                </div>
+            </article>
+
+            <div class="blog__list">
+                <article class="blog__row">
+                    <a href="blog-post.html" class="blog__row-img">
+                        <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=400&auto=format&fit=crop"
+                            alt="Mother with baby clothes" loading="lazy">
+                    </a>
+                    <div class="blog__row-body">
+                        <div class="blog__meta">
+                            <span class="blog__tag">Maternity</span>
+                            <span>January 29, 2025</span> &ndash; <span>4 MINS READ</span>
+                        </div>
+                        <h3><a href="blog-post.html">Caring for yourself postpartum: what every new mother should know</a></h3>
+                    </div>
+                </article>
+
+                <article class="blog__row">
+                    <a href="blog-post.html" class="blog__row-img">
+                        <img src="https://images.unsplash.com/photo-1498551172505-8ee7ad69f235?q=80&w=400&auto=format&fit=crop"
+                            alt="Person under stress at a desk" loading="lazy">
+                    </a>
+                    <div class="blog__row-body">
+                        <div class="blog__meta">
+                            <span class="blog__tag">Psychiatric</span>
+                            <span>January 28, 2025</span> &ndash; <span>4 MINS READ</span>
+                        </div>
+                        <h3><a href="blog-post.html">The importance of self-care in managing everyday stress</a></h3>
+                    </div>
+                </article>
+
+                <article class="blog__row">
+                    <a href="blog-post.html" class="blog__row-img">
+                        <img src="https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?q=80&w=400&auto=format&fit=crop"
+                            alt="Cardiologist reviewing a scan" loading="lazy">
+                    </a>
+                    <div class="blog__row-body">
+                        <div class="blog__meta">
+                            <span class="blog__tag">Cardiology</span>
+                            <span>January 24, 2025</span> &ndash; <span>5 MINS READ</span>
+                        </div>
+                        <h3><a href="blog-post.html">Know your numbers: blood pressure targets that protect your heart</a></h3>
+                    </div>
+                </article>
+
+                <article class="blog__row">
+                    <a href="blog-post.html" class="blog__row-img">
+                        <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=400&auto=format&fit=crop"
+                            alt="Child at a paediatric check-up" loading="lazy">
+                    </a>
+                    <div class="blog__row-body">
+                        <div class="blog__meta">
+                            <span class="blog__tag">Paediatrics</span>
+                            <span>January 21, 2025</span> &ndash; <span>3 MINS READ</span>
+                        </div>
+                        <h3><a href="blog-post.html">The childhood vaccination schedule, explained simply for parents</a></h3>
+                    </div>
+                </article>
+
+                <article class="blog__row">
+                    <a href="blog-post.html" class="blog__row-img">
+                        <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=400&auto=format&fit=crop"
+                            alt="Fresh vegetables and grains" loading="lazy">
+                    </a>
+                    <div class="blog__row-body">
+                        <div class="blog__meta">
+                            <span class="blog__tag">Nutrition</span>
+                            <span>January 18, 2025</span> &ndash; <span>4 MINS READ</span>
+                        </div>
+                        <h3><a href="blog-post.html">Eating for recovery: foods that help your body heal after surgery</a></h3>
+                    </div>
+                </article>
+
+                <article class="blog__row">
+                    <a href="blog-post.html" class="blog__row-img">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=400&auto=format&fit=crop"
+                            alt="Person exercising outdoors" loading="lazy">
+                    </a>
+                    <div class="blog__row-body">
+                        <div class="blog__meta">
+                            <span class="blog__tag">Orthopaedics</span>
+                            <span>January 15, 2025</span> &ndash; <span>5 MINS READ</span>
+                        </div>
+                        <h3><a href="blog-post.html">Protecting your joints: simple habits that keep you moving for life</a></h3>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <div class="blog__footer">
+            <a href="blog.html" class="blog__viewall">
+                We have 21 more articles. <span>View All <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+        </div>
+    </section>
+
+    <!-- ============ PRE-FOOTER ============ -->
+    <div class="prefooter" id="prefooter">
+        <div class="prefooter__card">
+            <p>Access safe, quality health care services and information to support your health.</p>
+            <button class="prefooter__btn" aria-label="Read more"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+        <div class="prefooter__card">
+            <p>The Sun operates more than 20 units, including specialist day-care centres.</p>
+            <button class="prefooter__btn" aria-label="Read more"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+        <div class="prefooter__card">
+            <p>Delivering an exceptional care experience for every kind of patient.</p>
+            <button class="prefooter__btn" aria-label="Read more"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+        <div class="prefooter__card">
+            <p>It is our privilege to care for more than a million people across the district.</p>
+            <button class="prefooter__btn" aria-label="Read more"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+        <div class="prefooter__card">
+            <p>Driven by a desire to help, we collaborate and support one another.</p>
+            <button class="prefooter__btn" aria-label="Read more"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="site-footer" id="contact" data-section="Contact">
+        <svg class="site-footer__ecg" id="footerEcg" viewBox="0 0 1200 60" preserveAspectRatio="none"
+            aria-hidden="true">
+            <path d="M0 30 H320 l14 -22 l16 44 l14 -30 l12 14 H700 l16 -26 l18 40 l14 -28 H1200" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
+        <div class="ft__grid">
+            <div class="ft__col">
+                <a class="ft__logo" href="#hero" aria-label="The Sun Hospital">
+                    <img src="assets/logo-tsh.png" alt="The Sun Hospital" loading="lazy">
+                </a>
+
+                <div class="ft__contact">
+                    <p><strong>Location:</strong> G.T. Road, Bardhaman,<br>West Bengal 713101</p>
+                    <p><strong>Visiting Hours:</strong><br>
+                        Sunday: 08:00 AM &ndash; 10:00 PM<br>
+                        Monday &ndash; Friday: 06:00 AM &ndash; 12:00 AM</p>
+                </div>
+            </div>
+
+            <div class="ft__col">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="doctors.html">Doctors</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#faq">FAQs</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="departments.html">Site Map</a></li>
+                </ul>
+            </div>
+
+            <div class="ft__col">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="blog.html">Education</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="departments.html">Areas of Care</a></li>
+                    <li><a href="careers.html#openings">Volunteers</a></li>
+                </ul>
+            </div>
+
+            <div class="ft__col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="facilities.html#visiting">Visitor Information</a></li>
+                    <li><a href="contact.html#emergency">Emergency Care</a></li>
+                    <li><a href="#">Donate</a></li>
+                    <li><a href="lab-diagnostics.html">Online Services</a></li>
+                    <li><a href="#">Pay Your Bills</a></li>
+                </ul>
+            </div>
+
+            <div class="ft__col">
+                <h4>Trust &amp; Legal</h4>
+                <ul>
+                    <li><a href="#">Terms &amp; Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="facilities.html#visiting">Hospital Stay</a></li>
+                </ul>
+
+                <h4>Social Media</h4>
+                <div class="ft__social">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="ft__bottom">
+        <p class="ft__bottom-copy">&copy; 2026 The Sun Hospital. All rights reserved.</p>
+        <!-- already Bengali; left to the widget it gets round-tripped -->
+        <p class="ft__bottom-tag" lang="bn" translate="no">মানুষের সাথে ..... মানুষের পাশে</p>
+        <a class="ft__dev" href="https://promix.tech/" target="_blank" rel="noopener noreferrer" data-tip="Promix"
+            aria-label="Developed by Promix">
+            <span>Developed by</span>
+            <img src="assets/promix-logo.png" alt="Promix" loading="lazy">
+        </a>
+    </div>
+
+    <button class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <!-- ============ SCRIPTS ============ -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script src="assets/website.js"></script>
+    <!-- panel-controlled overlays; popups.js inserts nothing when they are off -->
+    <script src="assets/popups-config.js"></script>
+    <script src="assets/popups.js"></script>
+</body>
+
+</html>
